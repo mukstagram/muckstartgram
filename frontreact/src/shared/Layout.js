@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import Header from '../components/Header/Header';
+import React from "react";
+import styled from "styled-components";
+import Header from "../components/Header/Header";
 
 function Layout({ children }) {
   return (
@@ -13,8 +13,8 @@ function Layout({ children }) {
 
 const Wrap = styled.div`
   margin: 0 auto;
-  maxwidth: 1200px;
-  minwidth: 800px;
+  max-width: 1200px;
+  min-width: 800px;
 `;
 
 export default Layout;
