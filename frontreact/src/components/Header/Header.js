@@ -7,6 +7,13 @@ const Header = () => {
 
   //글작성 이동핸들러
   const foodPostHandler = () => {
+    // if (
+    //   window.confirm(
+    //     '글 작성은 회원가입 이후 가능합니다.\n회원가입 페이지로 이동하시겠습니까?'
+    //   )
+    // ) {
+    //   navigate('/signUp');
+    // }
     //추후 로그인여부 확인하는 조건 필요
     navigate('/foodPost');
   };
@@ -70,11 +77,12 @@ const ButtonStyle = styled.button`
   font-size: 20px;
   font-weight: bold;
   border: none;
-  background-color: #e8f3d6;
+  background-color: #fcf9be;
   border-radius: 5px;
+  user-select: none;
   cursor: pointer;
   &:hover {
-    background-color: #dae6c8;
+    background-color: #ece9a6;
   }
 `;
 
