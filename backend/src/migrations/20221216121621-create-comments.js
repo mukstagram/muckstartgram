@@ -7,10 +7,10 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.DataTypes.INTEGER,
             },
             userId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Users',
@@ -19,7 +19,7 @@ module.exports = {
                 onDelete: 'cascade',
             },
             foodId: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'FoodLists',
@@ -27,17 +27,17 @@ module.exports = {
                 },
                 onDelete: 'cascade',
             },
-            content: {
-                type: Sequelize.STRING,
+            comment: {
+                type: Sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             createdAt: {
-                type: Sequelize.DATE,
+                type: Sequelize.DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.DataTypes.NOW,
             },
             updatedAt: {
-                type: Sequelize.DATE,
+                type: Sequelize.DataTypes.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.DataTypes.NOW,
             },
