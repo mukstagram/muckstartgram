@@ -1,7 +1,14 @@
 import React from "react";
 
-const Detail = () => {
-  return <div>Detail</div>;
-};
+import Detailinfo from "../components/details/detailinfo";
+import Detailcomment from "../components/details/detailcomment";
 
+const Detail = () => {
+  return (
+    <>
+      <Detailinfo />
+      <Detailcomment />
+    </>
+  );
+};
 export default Detail;
