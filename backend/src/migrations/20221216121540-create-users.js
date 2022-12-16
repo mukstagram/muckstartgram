@@ -7,20 +7,20 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER,
+                type: Sequelize.DataTypes.INTEGER,
             },
             loginId: {
-                type: Sequelize.STRING,
+                type: Sequelize.DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },
             nickname: {
-                type: Sequelize.STRING,
+                type: Sequelize.DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },
             password: {
-                type: Sequelize.STRING,
+                type: Sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             createdAt: {
