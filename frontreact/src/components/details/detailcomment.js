@@ -1,9 +1,27 @@
 import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Detailcomment = () => {
+  const navigate = useNavigate();
+  //메인페이지 이동핸들러
+  const BackPageHandler = () => {
+    navigate("/");
+  };
+  // 수정하기버튼 open state
+  const [editOpen, setEditOpen] = useState(true);
+  //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
+  const inputopen = () => {
+    setEditOpen(!editOpen);
+  };
+
   return (
     <>
+      <LikeBackbox>
+        <Backpagebutton onClick={BackPageHandler}>메인으로</Backpagebutton>
+      </LikeBackbox>
+
       <Commentinputlayout>
         <Inputnickname>usernickname</Inputnickname>
         <Commentinput placeholder="댓글을입력해주세요" />
@@ -11,11 +29,20 @@ const Detailcomment = () => {
       </Commentinputlayout>
       <Commentlayout>
         <Commentbox>
-          <p>이학준</p>
-          <p>너모맛있어요</p>
+          <Commentnickname>이학준</Commentnickname>
+          <Commentcontent isOpen={editOpen}>너모맛있어요</Commentcontent>
+          <Editcommentinput
+            isOpen={editOpen}
+            placeholder="수정사항을입력해주세요"
+          />
         </Commentbox>
-        <Commenteditbutton>수정하기</Commenteditbutton>
-        <Commenteditbutton>삭제하기</Commenteditbutton>
+        <Commenteditcomletebutton isOpen={editOpen} onClick={inputopen}>
+          수정완료
+        </Commenteditcomletebutton>
+        <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
+          수정하기
+        </Commenteditbutton>
+        <Commentdelitebutton btnColor="red">삭제하기</Commentdelitebutton>
       </Commentlayout>
     </>
   );
@@ -52,7 +79,12 @@ const Commentbutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: aliceblue;
+  background-color: #7de5ed;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    background-color: #81c6e8;
+  }
 `;
 const Commentlayout = styled.div`
   width: 1020px;
@@ -73,7 +105,73 @@ const Commenteditbutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: aliceblue;
+  background-color: #f0ff42;
   margin-top: 8px;
   margin-right: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffe15d;
+  }
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+`;
+const Commenteditcomletebutton = styled.button`
+  width: 100px;
+  height: 86px;
+  border-radius: 5px;
+  background-color: #b6e2a1;
+  margin-top: 8px;
+  margin-right: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    background-color: #8ec3b0;
+  }
+  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
+`;
+const Commentdelitebutton = styled.button`
+  width: 100px;
+  height: 86px;
+  border-radius: 5px;
+  background-color: #ffadbc;
+  margin-top: 8px;
+  margin-right: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    background-color: #dc3535;
+  }
+`;
+const Editcommentinput = styled.input`
+  width: 800px;
+  height: 40px;
+  outline: none;
+  background-color: aliceblue;
+  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
+`;
+const Commentcontent = styled.p`
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+`;
+const Commentnickname = styled.p`
+  font-weight: 800;
+`;
+
+const LikeBackbox = styled.div`
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: -30px;
+  width: 1000px;
+  height: 50px;
+`;
+const Backpagebutton = styled.button`
+  width: 150px;
+  height: 50px;
+  float: right;
+  border-radius: 5px;
+  background-color: #e8f3d6;
+  font-size: 30px;
+  cursor: pointer;
+  &:hover {
+    background-color: #dae6c8;
+  }
 `;

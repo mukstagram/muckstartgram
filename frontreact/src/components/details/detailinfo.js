@@ -66,3 +66,8 @@ const Infocontent = styled.div`
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
 `;
+const Backpagebutton = styled.button`
+  width: 30px;
+  height: 50px;
+  margin-top: 90px;
+`;
