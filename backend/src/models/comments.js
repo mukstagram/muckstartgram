@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             this.belongsTo(models.Users, { foreignKey: 'userId' });
-            this.belongsTo(models.Posts, { foreignKey: 'postId' });
+            this.belongsTo(models.FoodLists, { foreignKey: 'foodId' });
         }
     }
     Comments.init(
@@ -20,12 +20,12 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            postId: {
+            foodId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'Posts',
-                    key: 'postId',
+                    model: 'foodLists',
+                    key: 'foodId',
                 },
                 onDelete: 'cascade',
             },
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             timestamps: true,
-            modelName: 'Comment',
+            modelName: 'Comments',
         }
     );
     return Comments;
