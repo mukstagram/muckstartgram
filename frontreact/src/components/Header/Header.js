@@ -10,14 +10,15 @@ const Header = () => {
     //추후 로그인여부 확인하는 조건 필요
     navigate('/foodPost');
   };
-
+  //로그인 이동 핸들러
   const loginHandler = () => {
     navigate('/login');
   };
-
+  //회원가입 이동 핸들러
   const signupHandler = () => {
     navigate('/signUp');
   };
+
   return (
     <Wrapheader>
       <PageTitle>먹스타그램</PageTitle>
@@ -71,6 +72,7 @@ const ButtonStyle = styled.button`
   border: none;
   background-color: #e8f3d6;
   border-radius: 5px;
+  cursor: pointer;
   &:hover {
     background-color: #dae6c8;
   }
