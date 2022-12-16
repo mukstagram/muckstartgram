@@ -1,6 +1,6 @@
 require('dotenv').config();
 const env = process.env;
-console.log(env);
+
 const development = {
     username: env.MYSQL_USERNAME,
     password: env.MYSQL_PASSWORD,
