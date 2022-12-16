@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const FoodPost = () => {
-  return <div>Login</div>;
+const Login = () => {
+  return <div>Login1</div>;
 };
 
-export default FoodPost;
+export default Login;
