@@ -1,16 +1,30 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { __getFoodList } from "../../redux/modules/detailmodule";
 import image from "../../img/jjajang.jpg";
 
 const Detailinfo = () => {
+  const param = useParams().id;
+  const dispatch = useDispatch();
+  const foodList = useSelector((state) => state.detailmodule.foodList);
+  console.log(foodList);
+  useEffect(() => {
+    dispatch(__getFoodList(param));
+  }, [dispatch]);
+
   return (
     <Detailcontainer>
       <Imagelayout>
+        {/*  썸내일백엔드작업완료시변경 */}
         <Image src={image} alt={"오류입니다!"} />
       </Imagelayout>
       <Infolayout>
-        <Infotitle>이학준의 아침 짜장면</Infotitle>
-        <Infocontent>잘먹었습니다~</Infocontent>
+        <Infotitle>
+          {foodList.userId}의 {foodList.category} {foodList.title}
+        </Infotitle>
+        <Infocontent>{foodList.content}</Infocontent>
       </Infolayout>
     </Detailcontainer>
   );

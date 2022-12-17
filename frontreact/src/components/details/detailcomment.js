@@ -1,5 +1,6 @@
+import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,6 +16,9 @@ const Detailcomment = () => {
   const inputopen = () => {
     setEditOpen(!editOpen);
   };
+  const inputcomplete = () => {
+    setEditOpen(!editOpen);
+  };
 
   return (
     <>
@@ -25,6 +29,7 @@ const Detailcomment = () => {
       <Commentinputlayout>
         <Inputnickname>usernickname</Inputnickname>
         <Commentinput placeholder="댓글을입력해주세요" />
+        {/*   댓글등록시 로그인안되어있을경우 로그인페이지로 이동 구현해야함 */}
         <Commentbutton>댓글등록</Commentbutton>
       </Commentinputlayout>
       <Commentlayout>
@@ -36,7 +41,7 @@ const Detailcomment = () => {
             placeholder="수정사항을입력해주세요"
           />
         </Commentbox>
-        <Commenteditcomletebutton isOpen={editOpen} onClick={inputopen}>
+        <Commenteditcomletebutton isOpen={editOpen} onClick={inputcomplete}>
           수정완료
         </Commenteditcomletebutton>
         <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
