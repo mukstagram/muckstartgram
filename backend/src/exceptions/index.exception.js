@@ -23,4 +23,17 @@ class AuthenticationError extends Error {
     }
 }
 
-module.exports = { InvalidParamsError, ValidationError, AuthenticationError };
+class CommentError extends Error {
+    constructor(message, type, status) {
+        super(message);
+        this.status = status;
+        this.type = type;
+    }
+}
+
+module.exports = {
+    InvalidParamsError,
+    ValidationError,
+    AuthenticationError,
+    CommentError,
+};
