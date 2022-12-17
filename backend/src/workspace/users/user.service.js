@@ -17,14 +17,14 @@ class UserService {
     }) => {
         // 에러 처리
         const isExistUser = await this.userRepository.findAllPost();
-        for (let a of isExistUser) {
-            if (a.loginId === loginId) {
+        for (let user of isExistUser) {
+            if (user.loginId === loginId) {
               throw new InvalidParamsError([
                 '중복된 아이디입니다.',
                 { type : "overlapId" }
               ])
             }
-            if (a.nickname === nickname) {
+            if (user.nickname === nickname) {
               throw new InvalidParamsError(
                 '중복된 닉네임입니다.',
                 { type : "overlapnickname" }

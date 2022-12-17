@@ -16,7 +16,7 @@ class UserService {
     }) => {
     const resultUser = await Users.findOne({
         where : {
-            [Op.or]: [{loginId},{password}]
+            [Op.and]: [{loginId},{password}]
         }
     });
     return resultUser;

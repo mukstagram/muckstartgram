@@ -21,13 +21,15 @@ module.exports = async (req, res, next) => {
 
     const userId = jwt.verify(tokenValue, process.env.SECRET_KEY);
     
-    await Users.findOne({
+    const user = await Users.findOne({
       where: { userId },
-      attributes: { exclude: ["password"] }})
-      .then((user) => {
-      res.locals.user = user;
-      next();
-    });
+      /*attributes: { exclude: ["password"] }*/})
+    //   .then((user) => {
+    //     console.log(user);
+    //   res.locals.user = user;
+    //   next();
+    // });
+    console.log(user)
   } catch (error) {
     console.log(error);
     res.status(401).send({
