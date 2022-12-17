@@ -9,7 +9,7 @@ class CommentRepository {
     getFoodList = async () => {
         const foodList = await this.FoodLists.findAll({
             raw: true,
-            attributes: ['foodId','title','thumbnail'],
+            attributes: ['foodId','title','thumbnail','category'],
             order: [['createdAt', 'DESC']],
         });
 
