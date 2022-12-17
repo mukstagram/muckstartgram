@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -22,6 +23,7 @@
     "jest": "^29.3.1",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.27.0",
     "sequelize-cli": "^6.5.2"
