@@ -1,9 +1,9 @@
 const CommentRepository = require('../comments/comment.repository');
-const { Comments, FoodLists } = require('../../models');
+const { Comments } = require('../../models');
 const { CommentError } = require('../../exceptions/index.exception');
 
 class CommentService {
-    commentRepository = new CommentRepository(Comments, FoodLists);
+    commentRepository = new CommentRepository(Comments);
 
     createComment = async (userId, foodId, comment) => {
         const isCreate = await this.commentRepository.createComment(
@@ -61,7 +61,9 @@ class CommentService {
             userId
         );
 
-        if (isDelete[0] === 0) {
+        console.log(isDelete);
+
+        if (!isDelete) {
             throw new CommentError(
                 '댓글 삭제에 실패하였습니다.',
                 'DeleteFailed',
