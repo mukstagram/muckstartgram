@@ -24,6 +24,7 @@ export const __registerDB = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
+      console.log(payload);
       return thunkAPI.rejectWithValue(error);
     }
   }
