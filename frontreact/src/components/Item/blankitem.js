@@ -1,16 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
-const Item = ({ food }) => {
-  const navigate = useNavigate();
-
+const Blankitem = () => {
   return (
     <Wrap>
-      <ImgSpace
-        onClick={() => navigate(`/detail/:${food.foodId}`)}
-        src="https://img.freepik.com/premium-vector/vector-photo-frame-design-realistic-photograph-with-blank-space-for-image_100456-341.jpg"
-      />
+      <ImgSpace />
       <WrapTitle>
         <div>요리타이틀</div>
       </WrapTitle>
@@ -26,11 +20,11 @@ const Wrap = styled.div`
   margin-bottom: 10px;
 `;
 
-const ImgSpace = styled.img`
+const ImgSpace = styled.div`
   width: 180px;
   height: 180px;
   margin-bottom: 5px;
-  cursor: pointer;
+  background-color: gray;
 `;
 
 const WrapTitle = styled.div`
@@ -41,4 +35,4 @@ const WrapTitle = styled.div`
   font-weight: bold;
 `;
 
-export default Item;
+export default Blankitem;
