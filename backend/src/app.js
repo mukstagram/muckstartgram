@@ -10,10 +10,11 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = process.env.PORT;
-
+const cors = require("cors");
 //Body
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // 라우터 등록
 app.use('/api', routes);
