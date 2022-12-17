@@ -29,17 +29,17 @@ const StButton = styled.button`
       case "large":
         return css`
           width: 160px;
-          height: 25px;
+          height: 30px;
         `;
       case "medium":
         return css`
           width: 120px;
-          height: 25px;
+          height: 30px;
         `;
       case "small":
         return css`
           width: 80px;
-          height: 25px !important;
+          height: 30px !important;
         `;
       default:
         return css`
