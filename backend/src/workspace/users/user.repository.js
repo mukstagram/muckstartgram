@@ -12,15 +12,16 @@ class UserService {
 
     // loginId,password로 DB에서 유저 정보 찾기 s
     findUser = async ({
-        userId
+        loginId,
+        password
     }) => {
-    const resultUser = await Users.findOne({
-        where : {
-            [Op.and]: [{loginId},{password}]
-        }
-    });
-    return resultUser;
-    };
+        const resultUser = await Users.findOne({
+            where: {
+                [Op.and]: [{loginId}, {password}]
+            }
+        });
+        return resultUser;
+    }
 
     // 유저 생성 repository : 유저 정보 DB 저장    
     createUser = async ({
