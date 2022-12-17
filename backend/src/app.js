@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use('/api', routes);
 
 //Error 핸들러
-// app.use(errorLogger); // Error Logger
+app.use(errorLogger); // Error Logger
 app.use(errorHandler); // Error Handler
 
 app.listen(PORT, () => {
