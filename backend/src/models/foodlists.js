@@ -40,6 +40,14 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            thumbnail: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            category: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
         },
         {
             sequelize,
