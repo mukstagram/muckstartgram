@@ -2,9 +2,9 @@ import React, { useState, useCallback } from "react";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { __registerDB } from "../redux/modules/signupmodule";
+import { __signUp } from "../redux/modules/signupmodule";
 
-// function
+// instance
 import { userIdCheck, nickNameCheck, passwordCheck } from "../shared/regExp";
 
 // styled
@@ -126,7 +126,7 @@ const SignUp = () => {
     }
 
     dispatch(
-      __registerDB({ loginId: userId, password: password, nickname: nickName })
+      __signUp({ loginId: userId, password: password, nickname: nickName })
     );
   };
 
