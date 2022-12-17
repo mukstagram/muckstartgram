@@ -5,7 +5,7 @@ class UserService {
     constructor() {}
 
     //DB에서 모든 유저 불러오기
-    findAllPost = async () => {
+    findAllUsers = async () => {
         const users = await Users.findAll({});
         return users;
       };

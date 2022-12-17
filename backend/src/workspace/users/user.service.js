@@ -16,7 +16,7 @@ class UserService {
         nickname 
     }) => {
         // 에러 처리
-        const isExistUser = await this.userRepository.findAllPost();
+        const isExistUser = await this.userRepository.findAllUsers();
         for (let user of isExistUser) {
             if (user.loginId === loginId) {
               throw new InvalidParamsError([
