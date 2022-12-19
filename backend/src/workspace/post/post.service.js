@@ -11,7 +11,8 @@ class PostService {
     };
 
     getFoodDetail = async ({ foodId }) => {
-        return this.postRepository.getFood({foodId})
+        let foodDetail = await this.postRepository.getFood({foodId});
+        return foodDetail;
     };
 
     getFoodList = async () => {
