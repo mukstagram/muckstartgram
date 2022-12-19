@@ -5,7 +5,7 @@ import { apis } from "../../shared/api";
 import { deleteCookie, setCookie } from "../../shared/cookie";
 
 // library
-import { history } from "../config/configStore";
+// import { history } from "../config/configStore";
 
 const initialState = {
   loginInfo: {
@@ -22,10 +22,10 @@ export const __setLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.login(payload).then((response) => {
-        setCookie("token", response.data[1].token, 7);
-        localStorage.setItem("username", response.data[0].username);
+        console.log(response);
+        // setCookie("token", response.data[1].token, 7);
+        // localStorage.setItem("username", response.data[0].username);
         // dispatch(setLogin({ id: id }));
-        history.replace("/");
       });
       console.log(data.data);
       console.log(payload);
@@ -43,9 +43,7 @@ export const __loginCheck = createAsyncThunk(
   "loginCheck",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.signup(payload).then(() => {
-        history.push("/login");
-      });
+      const data = await apis.signup(payload);
       console.log(data.data);
       console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
