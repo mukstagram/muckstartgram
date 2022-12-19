@@ -9,10 +9,10 @@ const Item = ({ food }) => {
     <Wrap>
       <ImgSpace
         onClick={() => navigate(`/detail/:${food.foodId}`)}
-        src="https://img.freepik.com/premium-vector/vector-photo-frame-design-realistic-photograph-with-blank-space-for-image_100456-341.jpg"
+        src={`${process.env.REACT_APP_IMGURL}/${food.thumbnail}`}
       />
       <WrapTitle>
-        <div>요리타이틀</div>
+        <div>{food.title}</div>
       </WrapTitle>
     </Wrap>
   );

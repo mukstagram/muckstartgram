@@ -6,7 +6,7 @@ const Blankitem = () => {
     <Wrap>
       <ImgSpace />
       <WrapTitle>
-        <div>요리타이틀</div>
+        <div>now Loading...</div>
       </WrapTitle>
     </Wrap>
   );
