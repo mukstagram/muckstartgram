@@ -8,34 +8,35 @@ class UserService {
     findAllUsers = async () => {
         const users = await Users.findAll({});
         return users;
-      };
+    };
 
-    // loginId,password로 DB에서 유저 정보 찾기 s
-    findUser = async ({
-        loginId,
-        password
-    }) => {
+    // loginId로 DB에서 유저 정보 찾기 s
+    findUser = async ({ loginId }) => {
         const resultUser = await Users.findOne({
             where: {
-                [Op.and]: [{loginId}, {password}]
-            }
+                [Op.or]: [{ loginId }],
+            },
         });
         return resultUser;
-    }
+    };
 
-    // 유저 생성 repository : 유저 정보 DB 저장    
-    createUser = async ({
-        loginId, 
-        password, 
-        nickname 
-      }) => {
+    //nickname으로 DB에서 유저찾기
+    findUserNickname = async ({ nickname }) => {
+        const resultUser = await Users.findOne({
+            where: { nickname },
+        });
+        return resultUser;
+    };
+
+    // 유저 생성 repository : 유저 정보 DB 저장
+    createUser = async ({ loginId, password, nickname }) => {
         const singup = await Users.create({
-          loginId,
-          nickname,
-          password
+            loginId,
+            nickname,
+            password,
         });
         return singup;
     };
-};
+}
 
 module.exports = UserService;

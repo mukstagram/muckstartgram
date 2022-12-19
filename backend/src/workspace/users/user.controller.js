@@ -1,6 +1,5 @@
 const UserService = require('./user.service');
 require('dotenv').config({ path: '../.env' });
-const { errorHandler } = require('../../middlewares/error-hander.middleware')
 
 class UserController {
     constructor() {
@@ -14,57 +13,46 @@ class UserController {
      * **/
 
     // 유저 생성 controller
-    createUser = async (req, res) => {
+    createUser = async (req, res, next) => {
         try {
-            const { 
-                loginId, 
-                password, 
-                nickname 
-            } = req.body;
+            const { loginId, password, nickname } = req.body;
 
             await this.userService.createUser({
-                loginId, 
-                password, 
-                nickname 
+                loginId,
+                password,
+                nickname,
             });
 
-             res
-                .status(200)
-                .json({message : "회원가입 성공", type : "sucess"});
+            res.status(200).json({
+                message: '회원가입 성공',
+                type: 'sucess',
+            });
         } catch (error) {
-            res.status(500).json({ message : "dberror" });
+            next(error);
         }
     };
 
     // 로그인 controller
-    loginUser = async (req, res) => {
+    loginUser = async (req, res, next) => {
         try {
-            const {
-                loginId, 
-                password
-            } = req.body;
+            const { loginId, password } = req.body;
 
-            const resultUser = 
-                await this.userService.findUser({
-                    loginId, password
-                });
-                
-                const token = 
-                    await this.userService.createToken(resultUser.userId, resultUser.nickname);
-
-                req.get(process.env.COOKIE_NAME, `Bearer ${token}`);
-                res
-                    .status(200)
-                    .json({token, type : "sucess"});
-        } catch (error) {
-            // throw new errorHandler(error)
-            res.status(400).json({ 
-                message: "로그인 실패",
-                type : "badRequest" 
+            const resultUser = await this.userService.findUser({
+                loginId,
+                password,
             });
-        }
-    }
 
+            const token = await this.userService.createToken(resultUser);
+
+            req.get(process.env.COOKIE_NAME, `Bearer ${token}`);
+            res.header({ token }).send({
+                message: '로그인 성공',
+                type: 'sucess',
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 module.exports = UserController;
