@@ -18,10 +18,11 @@ class ValidationError extends Error {
 }
 
 class AuthenticationError extends Error {
-    constructor(message, status) {
+    constructor(message, type, status) {
         super(message);
         this.status = status || 400;
         this.name = 'AuthenticationError';
+        this.type = type;
     }
 }
 

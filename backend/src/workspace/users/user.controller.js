@@ -28,7 +28,6 @@ class UserController {
                 type: 'sucess',
             });
         } catch (error) {
-            console.log(error);
             next(error);
         }
     };
@@ -51,7 +50,6 @@ class UserController {
                 type: 'sucess',
             });
         } catch (error) {
-            console.log(error);
             next(error);
         }
     };
