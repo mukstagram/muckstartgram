@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const { Users } = require('../../models');
 
-class CommentRepository {
+class PostRepository {
     constructor(foodLists) {
         this.FoodLists = foodLists;
     }
@@ -9,23 +9,28 @@ class CommentRepository {
     getFoodList = async () => {
         const foodList = await this.FoodLists.findAll({
             raw: true,
-            attributes: ['foodId','title','thumbnail','category'],
+            attributes: ['foodId', 'title', 'thumbnail', 'category'],
             order: [['createdAt', 'DESC']],
         });
 
         return foodList;
     };
 
-    getFood = async ({foodId}) => {
+    getFood = async ({ foodId }) => {
         return await this.FoodLists.findOne({
-            where: {foodId}
-        })
+            where: { foodId },
+        });
+    };
 
-    }
-
-    createFood = async ({category,title,content,thumbnail,userId}) => {
-        await this.FoodLists.create({category, title, content, thumbnail, userId});
-    }
+    createFood = async ({ category, title, content, thumbnail, userId }) => {
+        await this.FoodLists.create({
+            category,
+            title,
+            content,
+            thumbnail,
+            userId,
+        });
+    };
 }
 
-module.exports = CommentRepository;
+module.exports = PostRepository;
