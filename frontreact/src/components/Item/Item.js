@@ -8,7 +8,7 @@ const Item = ({ food }) => {
   return (
     <Wrap>
       <ImgSpace
-        onClick={() => navigate(`/detail/:${food.foodId}`)}
+        onClick={() => navigate(`/detail/${food.foodId}`)}
         src={`${process.env.REACT_APP_IMGURL}/${food.thumbnail}`}
       />
       <WrapTitle>
