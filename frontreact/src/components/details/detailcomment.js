@@ -13,25 +13,10 @@ const Detailcomment = () => {
   const navigate = useNavigate();
 
   const { comments, isLoading } = useSelector((state) => state.detailmodule);
-
+  console.log(comments);
   //메인페이지 이동핸들러
   const BackPageHandler = () => {
     navigate("/");
-  };
-  const commentList = comments.map((e) => {
-    return <Detailcommentitem comments={e} />;
-  });
-  console.log(commentList);
-
-  //수정하기open 스테이트
-  const [editOpen, setEditOpen] = useState(true);
-  //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
-  const inputopen = () => {
-    setEditOpen(!editOpen);
-  };
-  //수정하기완료버튼,클릭시닫게하고 수정상태 post
-  const inputcomplete = () => {
-    setEditOpen(!editOpen);
   };
   useEffect(() => {
     dispatch(__getComments(params));
@@ -47,7 +32,16 @@ const Detailcomment = () => {
         {/*   댓글등록시 로그인안되어있을경우 로그인페이지로 이동 구현해야함 */}
         <Commentbutton>댓글등록</Commentbutton>
       </Commentinputlayout>
-      {commentList}
+      <>
+        {comments.map((commentList) => {
+          return (
+            <Detailcommentitem
+              key={commentList.commentId}
+              comment={commentList}
+            />
+          );
+        })}
+      </>
     </>
   );
 };
@@ -89,75 +83,6 @@ const Commentbutton = styled.button`
   &:hover {
     background-color: #81c6e8;
   }
-`;
-const Commentlayout = styled.div`
-  width: 1020px;
-  height: 100px;
-  background-color: antiquewhite;
-  margin-top: 10px;
-  margin-left: 90px;
-  border: 3px solid #f5b43d;
-  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  display: flex;
-`;
-const Commentbox = styled.div`
-  width: 910px;
-  margin-left: 10px;
-`;
-const Commenteditbutton = styled.button`
-  width: 100px;
-  height: 86px;
-  border-radius: 5px;
-  background-color: #f0ff42;
-  margin-top: 8px;
-  margin-right: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  &:hover {
-    background-color: #ffe15d;
-  }
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-`;
-const Commenteditcomletebutton = styled.button`
-  width: 100px;
-  height: 86px;
-  border-radius: 5px;
-  background-color: #b6e2a1;
-  margin-top: 8px;
-  margin-right: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  &:hover {
-    background-color: #8ec3b0;
-  }
-  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
-`;
-const Commentdelitebutton = styled.button`
-  width: 100px;
-  height: 86px;
-  border-radius: 5px;
-  background-color: #ffadbc;
-  margin-top: 8px;
-  margin-right: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  &:hover {
-    background-color: #dc3535;
-  }
-`;
-const Editcommentinput = styled.input`
-  width: 800px;
-  height: 40px;
-  outline: none;
-  background-color: aliceblue;
-  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
-`;
-const Commentcontent = styled.p`
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-`;
-const Commentnickname = styled.p`
-  font-weight: 800;
 `;
 
 const LikeBackbox = styled.div`

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { __getComments } from "../../redux/modules/detailmodule";
 import styled from "styled-components";
 
-const Detailcommentitem = ({ commentList }) => {
+const Detailcommentitem = ({ comment }) => {
   const params = useParams().id;
   const dispatch = useDispatch();
   const { comments, isLoading } = useSelector((state) => state.detailmodule);
@@ -26,8 +26,8 @@ const Detailcommentitem = ({ commentList }) => {
   return (
     <Commentlayout>
       <Commentbox>
-        <Commentnickname>asd</Commentnickname>
-        <Commentcontent isOpen={editOpen}>너모맛있어요</Commentcontent>
+        <Commentnickname>{comment.nickname}</Commentnickname>
+        <Commentcontent isOpen={editOpen}>{comment.comment}</Commentcontent>
         <Editcommentinput
           isOpen={editOpen}
           placeholder="수정사항을입력해주세요"
