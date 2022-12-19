@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import apis from '../../shared/api';
 
 //초기값
 const initialState = {
