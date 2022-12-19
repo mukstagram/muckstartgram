@@ -1,16 +1,31 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import image from "../../img/jjajang.jpg";
+import { __getFoodList } from "../../redux/modules/detailmodule";
 
 const Detailinfo = () => {
+  const param = useParams().id;
+  const dispatch = useDispatch();
+  const foodList = useSelector((state) => state.detailmodule.foodList);
+
+  useEffect(() => {
+    dispatch(__getFoodList(param));
+  }, [dispatch]);
+
   return (
     <Detailcontainer>
       <Imagelayout>
-        <Image src={image} alt={"오류입니다!"} />
+        <Image
+          src={`${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`}
+          alt={"오류입니다!"}
+        />
       </Imagelayout>
       <Infolayout>
-        <Infotitle>이학준의 아침 짜장면</Infotitle>
-        <Infocontent>잘먹었습니다~</Infocontent>
+        <Infotitle>
+          {foodList.userId}의 {foodList.category} {foodList.title}
+        </Infotitle>
+        <Infocontent>{foodList.content}</Infocontent>
       </Infolayout>
     </Detailcontainer>
   );
@@ -65,4 +80,9 @@ const Infocontent = styled.div`
   border-radius: 20px;
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+`;
+const Backpagebutton = styled.button`
+  width: 30px;
+  height: 50px;
+  margin-top: 90px;
 `;
