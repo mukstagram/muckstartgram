@@ -1,9 +1,15 @@
 const { Op, QueryTypes } = require('sequelize');
-const { Users, sequelize } = require('../../models');
+const { sequelize } = require('../../models');
 class CommentRepository {
     constructor(CommentModel) {
         this.commentModel = CommentModel;
     }
+
+    findComment = async (commentId) => {
+        return this.commentModel.findOne({
+            where: { commentId },
+        });
+    };
 
     createComment = async (userId, foodId, comment) => {
         return this.commentModel.create({
@@ -14,13 +20,6 @@ class CommentRepository {
     };
 
     getComments = async (foodId) => {
-        // return await this.commentModel.findAll({
-        //     where: { foodId },
-        //     attributes: { exclude: ['foodId', 'userId', 'updatedAt'] },
-        //     include: [{ model: Users, attributes: ['nickname'] }],
-        //     order: [['createdAt', 'DESC']],
-        //     raw: true,
-        // });
         const query = `select c.commentId, c.comment, c.createdAt, u.nickname
                         from Comments c join Users u ON c.userId = u.userId
                         where c.foodId = ?

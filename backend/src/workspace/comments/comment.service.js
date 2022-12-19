@@ -1,11 +1,31 @@
 const CommentRepository = require('../comments/comment.repository');
-const { Comments } = require('../../models');
+const PostRepository = require('../post/post.repository');
+const { Comments, FoodLists } = require('../../models');
 const { CommentError } = require('../../exceptions/index.exception');
 
 class CommentService {
     commentRepository = new CommentRepository(Comments);
+    postRepository = new PostRepository(FoodLists);
 
     createComment = async (userId, foodId, comment) => {
+        const existPost = await this.postRepository.getFood({ foodId });
+
+        if (!existPost) {
+            throw new CommentError(
+                '존재하지 않는 게시물입니다.',
+                'NotFoundPost',
+                404
+            );
+        }
+
+        if (!comment) {
+            throw new CommentError(
+                '댓글 내용을 입력해주세요',
+                'InvalidParamsError',
+                400
+            );
+        }
+
         const isCreate = await this.commentRepository.createComment(
             userId,
             foodId,
@@ -23,51 +43,75 @@ class CommentService {
     };
 
     getComments = async (foodId) => {
-        const existComment = await this.commentRepository.getComments(foodId);
+        const existPost = await this.postRepository.getFood({ foodId });
 
-        if (!existComment)
+        if (!existPost) {
             throw new CommentError(
-                '댓글 조회에 실패하였습니다.',
-                'NotFound',
+                '존재하지 않는 게시물입니다.',
+                'NotFoundPost',
                 404
             );
+        }
 
-        return existComment;
+        return await this.commentRepository.getComments(foodId);
     };
 
     editComment = async (userId, commentId, comment) => {
-        console.log(commentId);
+        if (!comment) {
+            throw new CommentError('댓글 내용을 입력해주세요');
+        }
+
+        const existComments = await this.commentRepository.findComment(
+            commentId
+        );
+
+        if (!existComments) {
+            throw new CommentError(
+                '존재하지 않는 댓글입니다.',
+                'NotFoundComment',
+                404
+            );
+        }
+
         const isEdit = await this.commentRepository.editComment(
             userId,
             commentId,
             comment
         );
 
-        console.log(isEdit);
-
         if (isEdit[0] === 0)
             throw new CommentError(
-                '댓글 수정에 실패하였습니다.',
+                '댓글 작성자만 수정이 가능합니다.',
                 'EditFailed',
-                400
+                403
             );
 
         return isEdit;
     };
 
     deleteComment = async (commentId, userId) => {
+        const existComments = await this.commentRepository.findComment(
+            commentId
+        );
+
+        if (!existComments) {
+            throw new CommentError(
+                '존재하지 않는 댓글입니다.',
+                'NotFoundComment',
+                404
+            );
+        }
+
         const isDelete = await this.commentRepository.deleteComment(
             commentId,
             userId
         );
 
-        console.log(isDelete);
-
         if (!isDelete) {
             throw new CommentError(
-                '댓글 삭제에 실패하였습니다.',
+                '댓글 작성자만 삭제가 가능합니다.',
                 'DeleteFailed',
-                400
+                403
             );
         }
         return isDelete;
