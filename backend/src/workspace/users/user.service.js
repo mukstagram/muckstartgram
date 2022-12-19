@@ -22,6 +22,7 @@ class UserService {
             password
         );
 
+        // 로그인 아이디 비밀번호 확인
         if (
             resultUser.loginId !== loginId ||
             resultUser.password !== rePassword
@@ -53,23 +54,24 @@ class UserService {
             );
         }
 
+        // 중복된 아이디 확인
         const isExistLoginId = await this.userRepository.findUser({
             loginId,
             password,
         });
-
-        const isExistNickname = await this.userRepository.findUserNickname({
-            nickname,
-        });
-
-        if (isExistLoginId.loginId === loginId) {
+        if (isExistLoginId) {
             throw new InvalidParamsError(
                 '중복된 아이디입니다.',
-                'overlapLoginId'
+                'overlapLoginId',
+                400
             );
         }
 
-        if (isExistNickname.nickname === nickname) {
+        // 중복된 닉네임 확인
+        const isExistNickname = await this.userRepository.findUserNickname({
+            nickname,
+        });
+        if (isExistNickname) {
             throw new InvalidParamsError(
                 '중복된 닉네임입니다.',
                 'overlapNickname'
@@ -83,14 +85,14 @@ class UserService {
         });
         return signup;
     };
-
-    //token 생성
-    createToken = async ({ userId }) => {
-        const token = jwt.sign({ userId }, process.env.SECRET_KEY, {
-            expiresIn: '3d',
-        });
-        return token;
-    };
 }
+
+//token 생성
+createToken = async ({ userId }) => {
+    const token = jwt.sign({ userId }, process.env.SECRET_KEY, {
+        expiresIn: '3d',
+    });
+    return token;
+};
 
 module.exports = UserService;

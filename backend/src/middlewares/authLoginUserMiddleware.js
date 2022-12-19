@@ -1,12 +1,11 @@
 require('dotenv').config();
-const { TokenError } = require('../exceptions/index.exception');
 
 module.exports = async (req, res, next) => {
     try {
-        const authorization = req.header.token;
+        const authorization = req.header(process.env.COOKIE_NAME);
 
         if (authorization) {
-            throw new TokenError('이미 로그인이 되어 있습니다.', 'badRequest');
+            throw new Error('이미 로그인이 되어 있습니다.', 'badRequest');
         }
         next();
     } catch (error) {

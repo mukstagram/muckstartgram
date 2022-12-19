@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { Users } = require('../models');
 require('dotenv').config();
-const { TokenError } = require('../exceptions/index.exception');
+// const { TokenError } = require('../exceptions/index.exception');
 
 module.exports = async (req, res, next) => {
     try {
@@ -12,17 +12,14 @@ module.exports = async (req, res, next) => {
         const [tokenType, tokenValue] = authorization.split(' ');
 
         if (tokenType !== 'Bearer') {
-            throw new TokenError(
+            throw new Error(
                 '전달된 쿠키에서 오류가 발생하였습니다.',
                 'badRequest'
             );
         }
 
         if (tokenValue === undefined) {
-            throw new TokenError(
-                '로그인 후 이용 가능한 기능입니다.',
-                'badRequest'
-            );
+            throw new Error('로그인 후 이용 가능한 기능입니다.', 'badRequest');
         }
 
         const { userId } = jwt.verify(tokenValue, process.env.SECRET_KEY);
