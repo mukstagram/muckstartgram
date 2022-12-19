@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
+import setLogin from "../redux/modules/loginmodule";
 
 // function
 
@@ -11,79 +12,22 @@ import Input from "../elements/Input";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
 
-const Login = () => {
+const Login = ({ history }) => {
+  const isLogin = useSelector((store) => store.user.is_login);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  });
 
   // // 아이디, 비밀번호, 비밀번호 확인
   const [loginId, setLoginId] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  // //오류메시지 상태저장
-  const [loginIdMessage, setLoginIdMessage] = useState("");
-  const [loginPasswordMessage, setLoginPasswordMessage] = useState("");
-
-  // // 유효성 검사
-  const [isLoginId, setIsLoginId] = useState(false);
-  const [isLoginPassword, setIsLoginPassword] = useState(false);
-
-  // 로그인아이디
-  const onChangeLoginId = useCallback((e) => {
-    setLoginId(e.target.value);
-    if (e.target.value.length < 5 || e.target.value.length > 8) {
-      setLoginIdMessage("아이디 형식이 맞지 않습니다.");
-      setIsLoginId(false);
-    } else {
-      setLoginIdMessage("올바른 아이디 입니다.)");
-      setIsLoginId(true);
-    }
-  }, []);
-
-  // 비밀번호
-  const onChangeLoginPassword = useCallback((e) => {
-    const loginPasswordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+=~₩])(?=.*[0-9]).{8,15}$/;
-    const logiPpasswordCurrent = e.target.value;
-    setLoginPassword(logiPpasswordCurrent);
-
-    if (!loginPasswordRegex.test(logiPpasswordCurrent)) {
-      setLoginPasswordMessage("비밀번호 조건이 맞지 않습니다!");
-      setIsLoginPassword(false);
-    } else {
-      setLoginPasswordMessage("안전한 비밀번호에요 :)");
-      setIsLoginPassword(true);
-    }
-  }, []);
-
-  // const logIn = () => {
-  //   if (userId === "") {
-  //     window.alert("아이디를 입력해주세요!");
-  //     return;
-  //   }
-
-  //   if (password === "") {
-  //     window.alert("비밀번호를 입력해주세요!");
-  //     return;
-  //   }
-
-  //   if (!userIdCheck(userId)) {
-  //     window.alert("아이디 형식을 확인해 주세요");
-  //     return;
-  //   }
-
-  //   if (!passwordCheck(password)) {
-  //     window.alert("비밀번호 형식을 확인해 주세요");
-  //     return;
-  //   }
-
-  //   if (password !== passwordConfirm) {
-  //     window.alert("비밀번호가 일치하지 않습니다.");
-  //     return;
-  //   }
-
-  //   // dispatch(
-  //   //   __registerDB({ loginId: userId, password: password, nickname: nickName })
-  //   // );
-  // };
+  const loginButtonHandler = (e) => {
+    e.preventDefault();
+    dispatch(setLogin({ loginId: loginId, password: loginPassword }));
+  };
 
   return (
     <LogInBox>
@@ -93,7 +37,10 @@ const Login = () => {
       <Text fs="24px" fw="400" mg="0 0 36px 0">
         🍚남들은 뭐먹지? 먹스타그램입니다🍚
       </Text>
-      <FormSection>
+      <Text fs="24px" fw="400" mg="0 0 36px 0">
+        🍗로그인 해주세요🍗
+      </Text>
+      <FormSection onSubmit={loginButtonHandler}>
         <div>
           <Text fs="20px" fw="400">
             아이디
@@ -102,47 +49,27 @@ const Login = () => {
             <Input
               type="text"
               typeName="userId"
-              onChange={onChangeLoginId}
+              onChange={(e) => setLoginId(e.target.value)}
               placeholder="🔑 아이디를 입력해주세요"
             />
-            {loginId.length > 0 && (
-              <Text
-                fs="14px"
-                fw="400"
-                color={`${isLoginId ? "green" : "red"}`}
-                className={`message ${isLoginId ? "success" : "error"}`}
-              >
-                {loginIdMessage}
-              </Text>
-            )}
           </InputBox>
           <Text fs="20px" fw="400">
             비밀번호
           </Text>
           <InputBox>
             <Input
-              onChange={onChangeLoginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
               title="비밀번호"
               typeTitle="password"
               fs="14px"
               fw="400"
               placeholder="🔒 비밀번호를 입력해주세요"
             />
-            {loginPassword.length > 0 && (
-              <Text
-                fs="14px"
-                fw="400"
-                color={`${isLoginPassword ? "green" : "red"}`}
-                className={`message ${isLoginPassword ? "success" : "error"}`}
-              >
-                {loginPasswordMessage}
-              </Text>
-            )}
           </InputBox>
         </div>
         <ButtonSet>
           <Button type="button" size="medium">
-            로그인
+            로그인하기
           </Button>
         </ButtonSet>
       </FormSection>

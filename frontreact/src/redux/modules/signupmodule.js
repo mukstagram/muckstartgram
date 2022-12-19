@@ -3,6 +3,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // instance
 import { apis } from "../../shared/api";
 
+// library
+import { history } from "../config/configStore";
+
 const initialState = {
   signUpInfo: {
     loginId: "",
