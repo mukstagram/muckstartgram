@@ -54,14 +54,6 @@ class CommentController {
             const userId = 1;
             const { commentId } = req.params;
 
-            if (!commentId || !userId) {
-                throw new CommentError(
-                    '데이터 형식이 올바르지 않습니다.',
-                    'InvalidParamsError',
-                    412
-                );
-            }
-
             await this.commentService.deleteComment(commentId, userId);
 
             res.status(200).json({

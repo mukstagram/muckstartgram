@@ -12,8 +12,6 @@ class CommentRepository {
     };
 
     createComment = async (userId, foodId, comment) => {
-        console.log(typeof foodId);
-        console.log({ foodId });
         return this.commentModel.create({
             userId,
             foodId,
