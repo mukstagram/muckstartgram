@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import setLogin from "../redux/modules/loginmodule";
+import { __setLogin } from "../redux/modules/loginmodule";
 
 // function
 
@@ -13,6 +14,8 @@ import Button from "../elements/Button";
 import Text from "../elements/Text";
 
 const Login = ({}) => {
+  const navigate = useNavigate();
+
   // const isLogin = useSelector((store) => store.user.is_login);
   const dispatch = useDispatch();
 
@@ -26,7 +29,10 @@ const Login = ({}) => {
 
   const loginButtonHandler = (e) => {
     e.preventDefault();
-    dispatch(setLogin({ loginId: loginId, password: loginPassword }));
+
+    dispatch(__setLogin({ loginId: loginId, password: loginPassword }));
+
+    navigate("/");
   };
 
   return (
@@ -40,7 +46,7 @@ const Login = ({}) => {
       <Text fs="24px" fw="400" mg="0 0 36px 0">
         🍗로그인 해주세요🍗
       </Text>
-      <FormSection onSubmit={loginButtonHandler}>
+      <FormSection>
         <div>
           <Text fs="20px" fw="400">
             아이디
@@ -68,7 +74,7 @@ const Login = ({}) => {
           </InputBox>
         </div>
         <ButtonSet>
-          <Button type="button" size="medium">
+          <Button type="button" size="medium" onClick={loginButtonHandler}>
             로그인하기
           </Button>
         </ButtonSet>
