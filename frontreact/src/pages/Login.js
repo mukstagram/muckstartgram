@@ -12,13 +12,13 @@ import Input from "../elements/Input";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
 
-const Login = ({ history }) => {
-  const isLogin = useSelector((store) => store.user.is_login);
+const Login = ({}) => {
+  // const isLogin = useSelector((store) => store.user.is_login);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLogin) history.push("/");
-  });
+  // useEffect(() => {
+  //   if (isLogin) history.push("/");
+  // });
 
   // // 아이디, 비밀번호, 비밀번호 확인
   const [loginId, setLoginId] = useState("");

@@ -4,31 +4,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../shared/api";
 
 // library
-import { history } from "../config/configStore";
+// import { history } from "../config/configStore";
 
 const initialState = {
-  signUpInfo: {
-    loginId: "",
-    password: "",
-    nickname: "",
-  },
+  signUpInfo: {},
   isLoading: false,
   error: null,
 };
 
 export const __signUp = createAsyncThunk(
-  "signUpPost",
+  "signUpUser",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.signup(payload).then(() => {
-        history.push("/login");
-      });
+      const data = await apis.signup(payload);
       console.log(data.data);
       console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
-      console.log(payload);
       return thunkAPI.rejectWithValue(error);
     }
   }

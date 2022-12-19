@@ -5,7 +5,7 @@ const setCookie = (name, value, exp = 5) => {
   // setTime () 메서드는 Date 객체를 1970 년 1 월 1 일 00:00:00 UTC부터 밀리 초 단위로 나타내는 시간으로 설정
   // getTime() 메서드는 표준시에 따라 지정된 날짜의 시간에 해당하는 숫자 값을 반환
   // exp = 5가 입력되었으므로, 5일 * 24시간 * 60분 * 60초 * 1000밀리초
-  // 쿠키가 설정되면 5일 동안 유효하다는 뜻인것 같다. 정확하지 않다.
+  // 쿠키가 설정되면 5일 동안 유효하다는 뜻인것 같다.
   date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
   document.cookie = `${name}=${value}; expires=${date.toUTCString()}`;
 };

@@ -166,9 +166,9 @@ const SignUp = () => {
                     영문자+숫자 조합으로 5자 이상 9자 미만으로 입력해주세요.
                   </Text>
                 )}
-                <Button type="button" size="medium">
+                {/* <Button type="button" size="medium">
                   중복 확인
-                </Button>
+                </Button> */}
               </InputBox>
               <Text fs="20px" fw="400">
                 비밀번호
