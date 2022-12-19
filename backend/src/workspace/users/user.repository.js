@@ -30,9 +30,6 @@ class UserService {
 
     // 유저 생성 repository : 유저 정보 DB 저장
     createUser = async ({ loginId, password, nickname }) => {
-        console.log(loginId, password, nickname);
-        // const rePassword = await this.createHashedPassword(password);
-
         const singup = await Users.create({
             loginId,
             nickname,
