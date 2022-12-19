@@ -10,7 +10,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { isLoading, Food } = useSelector((state) => state.homemodule);
   const foodlist = Food.data;
-  console.log(Food);
   useEffect(() => {
     dispatch(__getFoods());
   }, [dispatch]);
