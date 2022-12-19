@@ -1,78 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import Item from '../components/Item/Item';
-import Blankitem from '../components/Item/blankitem';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { __getFoods } from '../redux/modules/homemodule';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const { isLoading, Food } = useSelector((state) => state.homemodule);
-  const foodlist = Food.data;
-  useEffect(() => {
-    dispatch(__getFoods());
-  }, [dispatch]);
-
   return (
     <Wrap>
       <MealTime>
         <div>아침</div>
       </MealTime>
-      {isLoading ? (
-        <WrapItems>
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-        </WrapItems>
-      ) : foodlist ? (
-        <WrapItems>
-          {foodlist
-            .filter((food) => food.category === '아침')
-            .map((food) => {
-              return <Item key={food.foodId} food={food} />;
-            })}
-        </WrapItems>
-      ) : null}
+      <WrapItems>
+        {/* 서버에서 아침인 값들 map */}
+        <Item />
+      </WrapItems>
       <MealTime>
         <div>점심</div>
       </MealTime>
-      {isLoading ? (
-        <WrapItems>
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-        </WrapItems>
-      ) : foodlist ? (
-        <WrapItems>
-          {foodlist
-            .filter((food) => food.category === '점심')
-            .map((food) => {
-              return <Item key={food.foodId} food={food} />;
-            })}
-        </WrapItems>
-      ) : null}
+      <WrapItems>
+        {/* 서버에서 점심인 값들 map */}
+        <Item />
+      </WrapItems>
       <MealTime>
         <div>저녁</div>
       </MealTime>
-      {isLoading ? (
-        <WrapItems>
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-          <Blankitem />
-        </WrapItems>
-      ) : foodlist ? (
-        <WrapItems>
-          {foodlist
-            .filter((food) => food.category === '저녁')
-            .map((food) => {
-              return <Item key={food.foodId} food={food} />;
-            })}
-        </WrapItems>
-      ) : null}
+      <WrapItems>
+        {/* 서버에서 저녁인 값들 map */}
+        <Item />
+      </WrapItems>
     </Wrap>
   );
 };

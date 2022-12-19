@@ -1,40 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState('');
-  const [userToken, setUserToken] = useState('');
-
-  useEffect(() => {
-    getUser();
-  }, [userName, userToken]);
-
-  const getUser = () => {
-    setUserName(localStorage.getItem('username'));
-    setUserToken(localStorage.getItem('token'));
-  };
-
   //글작성 이동핸들러
   const foodPostHandler = () => {
-    if (userToken) {
-      navigate('/foodPost');
-    } else if (!userToken) {
-      if (
-        window.confirm(
-          '글 작성은 로그인 이후 가능합니다.\n로그인 페이지로 이동하시겠습니까?'
-        )
-      ) {
-        navigate('/login');
-      }
-    }
-  };
-  //로그아웃 핸들러
-  const logoutHandler = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
+    //추후 로그인여부 확인하는 조건 필요
+    navigate('/foodPost');
   };
   //로그인 이동 핸들러
   const loginHandler = () => {
@@ -50,15 +24,8 @@ const Header = () => {
       <PageTitle>먹스타그램</PageTitle>
       <WrapButton>
         <ButtonStyle onClick={foodPostHandler}>글 작성</ButtonStyle>
-        <WithTokenButtonStyle userToken={userToken} onClick={logoutHandler}>
-          로그아웃
-        </WithTokenButtonStyle>
-        <WithoutTokenButtonStyle userToken={userToken} onClick={loginHandler}>
-          로그인
-        </WithoutTokenButtonStyle>
-        <WithoutTokenButtonStyle userToken={userToken} onClick={signupHandler}>
-          회원가입
-        </WithoutTokenButtonStyle>
+        <ButtonStyle onClick={loginHandler}>로그인</ButtonStyle>
+        <ButtonStyle onClick={signupHandler}>회원가입</ButtonStyle>
         <NickTitle>닉네임</NickTitle>
       </WrapButton>
     </Wrapheader>
@@ -94,7 +61,6 @@ const WrapButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 5px;
   gap: 5px;
 `;
 
@@ -104,51 +70,17 @@ const ButtonStyle = styled.button`
   font-size: 20px;
   font-weight: bold;
   border: none;
-  background-color: #fcf9be;
+  background-color: #e8f3d6;
   border-radius: 5px;
-  user-select: none;
   cursor: pointer;
   &:hover {
-    background-color: #ece9a6;
+    background-color: #dae6c8;
   }
 `;
 
-const WithoutTokenButtonStyle = styled.button`
-  width: 100px;
-  height: 35px;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
-  background-color: #fcf9be;
-  border-radius: 5px;
-  user-select: none;
-  display: ${({ userToken }) => (userToken ? 'none' : 'block')};
-  cursor: pointer;
-  &:hover {
-    background-color: #ece9a6;
-  }
-`;
-
-const WithTokenButtonStyle = styled.button`
-  width: 100px;
-  height: 35px;
-  font-size: 20px;
-  font-weight: bold;
-  border: none;
-  background-color: #fcf9be;
-  border-radius: 5px;
-  user-select: none;
-  display: ${({ userToken }) => (userToken ? 'block' : 'none')};
-  cursor: pointer;
-  &:hover {
-    background-color: #ece9a6;
-  }
-`;
 const NickTitle = styled.div`
   font-size: large;
   font-weight: 600;
-  margin-right: 5px;
-  display: ${({ userToken }) => (userToken ? 'block' : 'none')};
 `;
 
 export default Header;
