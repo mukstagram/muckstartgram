@@ -6,7 +6,8 @@ class PostController{
     }
     createdFoodPost = async (req, res, next) => {
         try {
-            const {category,title,content,thumbnail} = req.body;
+            const {category,title,content} = req.body;
+            const thumbnail = req.file.key
             const {userId} = {userId:1}
 
             //이미지 가공 해줘야함
@@ -22,8 +23,8 @@ class PostController{
     getFoodDetail = async (req, res, next) => {
         try {
             const {foodId} = req.params;
-            const result = await this.postService.getFoodDetail({foodId});
-            console.log(result);
+            let result = await this.postService.getFoodDetail({foodId});
+
 
             res.json({ data: result});
 

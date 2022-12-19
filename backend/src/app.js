@@ -16,6 +16,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 // 라우터 등록
 app.use('/api', routes);
 
