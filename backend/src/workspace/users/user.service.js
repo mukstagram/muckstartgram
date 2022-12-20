@@ -13,7 +13,7 @@ class UserService {
 
     // loginId,password로 유저 정보 찾기 service
     findUser = async ({ loginId, password }) => {
-        const resultUser = await this.userRepository.findOneUser({
+        const resultUser = await this.userRepository.findUserLoginId({
             loginId,
         });
 
@@ -59,7 +59,7 @@ class UserService {
         const repassword = createHashedPassword(password);
 
         // 중복된 아이디 확인
-        const isExistLoginId = await this.userRepository.findOneUser({
+        const isExistLoginId = await this.userRepository.findUserLoginId({
             loginId,
         });
 
@@ -72,7 +72,7 @@ class UserService {
         }
 
         // 중복된 닉네임 확인
-        const isExistNickname = await this.userRepository.findOneUser({
+        const isExistNickname = await this.userRepository.findUserNickname({
             nickname,
         });
         if (isExistNickname) {

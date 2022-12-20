@@ -10,13 +10,24 @@ class UserService {
         return users;
     };
 
-    //loginId로 nickname으로 DB에서 유저찾기
-    findOneUser = async ({ loginId, nickname }) => {
+    //loginId로  DB에서 유저찾기
+    findUserLoginId = async ({ loginId }) => {
         const resultUser = await Users.findOne({
             where: {
-                [Op.or]: [{ loginId, nickname }],
+                [Op.or]: [{ loginId }],
             },
         });
+        return resultUser;
+    };
+
+    //nickname으로 DB에서 유저찾기
+    findUserNickname = async ({ nickname }) => {
+        const resultUser = await Users.findOne({
+            where: {
+                [Op.or]: [{ nickname }],
+            },
+        });
+        return resultUser;
     };
 
     // 유저 생성 repository : 유저 정보 DB 저장
