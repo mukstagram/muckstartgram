@@ -3,7 +3,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { __getComments } from "../../redux/modules/detailmodule";
+import {
+  __commentRegist,
+  __getComments,
+} from "../../redux/modules/detailmodule";
 import styled from "styled-components";
 import Detailcommentitem from "./detailcommentitem";
 
@@ -12,25 +15,72 @@ const Detailcomment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { comments, isLoading } = useSelector((state) => state.detailmodule);
+  //임시토큰값위해서 사용
+  const [userName, setUserName] = useState("");
+  const [userToken, setUserToken] = useState("");
+  //임시토큰값,유저이름설정
+  const getUser = () => {
+    setUserName(localStorage.getItem("username"));
+    setUserToken(localStorage.getItem("token"));
+  };
+  //셀렉터로 comment데이터값받아오기
+  const comments = useSelector((state) => state.detailmodule.comments);
   console.log(comments);
-  //메인페이지 이동핸들러
-  const BackPageHandler = () => {
+  //메인페이지 버튼
+  const BackPageBtn = () => {
     navigate("/");
   };
+  //수정하기페이지 이동버튼
+  const EditPageBtn = () => {
+    navigate(`/FoodRetouch/${params}`);
+  };
+  // 삭제하기버튼
+  const DeletePageBtn = () => {
+    window.confirm("삭제하시겠습니까?");
+  };
+
+  //댓글등록관련
+  const [commentInput, setCommentInput] = useState("");
+  const commentHandler = (e) => {
+    let value = e.target.value;
+    setCommentInput(value);
+  };
+  //댓글등록시 로그인안되어있을경우(토큰없을경우) 로그인페이지로 이동 구현해야함
+  const commentregistbutton = () => {
+    const newCommemt = { comment: commentInput };
+    dispatch(__commentRegist({ params, newCommemt }));
+    setCommentInput("");
+  };
+
   useEffect(() => {
     dispatch(__getComments(params));
-  }, [dispatch]);
+    getUser();
+  }, []);
   return (
     <>
       <LikeBackbox>
-        <Backpagebutton onClick={BackPageHandler}>메인으로</Backpagebutton>
+        <Editbuttonbox>
+          <Editmainbutton onClick={EditPageBtn} color={"yellow"}>
+            수정하기
+          </Editmainbutton>
+          <Editmainbutton onClick={DeletePageBtn} color={"red"}>
+            삭제하기
+          </Editmainbutton>
+        </Editbuttonbox>
+        <Backpagebutton onClick={BackPageBtn} value={"main"}>
+          메인으로
+        </Backpagebutton>
       </LikeBackbox>
       <Commentinputlayout>
         <Inputnickname>usernickname</Inputnickname>
-        <Commentinput placeholder="댓글을입력해주세요" />
-        {/*   댓글등록시 로그인안되어있을경우 로그인페이지로 이동 구현해야함 */}
-        <Commentbutton>댓글등록</Commentbutton>
+        <Commentinput
+          type="text"
+          value={commentInput}
+          placeholder="댓글을입력해주세요"
+          onChange={commentHandler}
+        />
+
+        <Commentbutton onClick={commentregistbutton}>댓글등록</Commentbutton>
       </Commentinputlayout>
       <>
         {comments.map((commentList) => {
@@ -91,16 +141,34 @@ const LikeBackbox = styled.div`
   margin-bottom: -30px;
   width: 1000px;
   height: 50px;
+  display: flex;
 `;
-const Backpagebutton = styled.button`
+const Editbuttonbox = styled.div`
+  margin-left: 150px;
+`;
+const Editmainbutton = styled.button`
   width: 150px;
   height: 50px;
-  float: right;
+  border-radius: 5px;
+  background-color: #e8f3d6;
+  font-size: 30px;
+  background-color: ${({ color }) =>
+    color === "yellow" ? "#f0ff42" : color === "red" ? "#ffadbc" : null};
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ color }) =>
+      color === "yellow" ? "#ffe15d" : color === "red" ? "#dc3535" : "#dae6c8"};
+  }
+`;
+const Backpagebutton = styled.button`
+  margin-left: 400px;
+  width: 150px;
+  height: 50px;
   border-radius: 5px;
   background-color: #e8f3d6;
   font-size: 30px;
   cursor: pointer;
   &:hover {
-    background-color: #dae6c8;
+    background-color: #ece9a6;
   }
 `;

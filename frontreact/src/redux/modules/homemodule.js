@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 //초기값
 const initialState = {
@@ -11,12 +11,10 @@ const initialState = {
 //thunk
 //메인페이지 음식리스트조회
 export const __getFoods = createAsyncThunk(
-  'getFoods',
+  "getFoods",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/post/list`
-      );
+      const { data } = await axios.get(`${process.env.REACT_APP_URL}/foods`);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -27,7 +25,7 @@ export const __getFoods = createAsyncThunk(
 
 //리듀서
 const homemodule = createSlice({
-  name: 'foodlist',
+  name: "foodlist",
   initialState,
   reducers: {},
   //thunk용 리듀서

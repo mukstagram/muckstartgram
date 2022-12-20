@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-// api에 합의된 사항이 없어 일단 보류
+/* // api에 합의된 사항이 없어 일단 보류
 // intercepter로 cookie로 token을 만들어 보내줍니다.
 api.interceptors.request.use(
   function (config) {
@@ -23,7 +23,7 @@ api.interceptors.request.use(
     console.log(error);
     return Promise.reject(error);
   }
-);
+); */
 
 export const apis = {
   // login

@@ -9,7 +9,6 @@ import styled from "styled-components";
 const Detailcommentitem = ({ comment }) => {
   const params = useParams().id;
   const dispatch = useDispatch();
-  const { comments, isLoading } = useSelector((state) => state.detailmodule);
   //수정하기open 스테이트
   const [editOpen, setEditOpen] = useState(true);
   //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
@@ -43,44 +42,7 @@ const Detailcommentitem = ({ comment }) => {
     </Commentlayout>
   );
 };
-{
-  /* <>
-      {isLoading ? (
-        null
-      ) : comments ? (
-        <>
-          {comments.map((commentList) => {
-            return (
-              <Commentlayout>
-                <Commentbox>
-                  <Commentnickname>asd</Commentnickname>
-                  <Commentcontent isOpen={editOpen}>
-                    너모맛있어요
-                  </Commentcontent>
-                  <Editcommentinput
-                    isOpen={editOpen}
-                    placeholder="수정사항을입력해주세요"
-                  />
-                </Commentbox>
-                <Commenteditcomletebutton
-                  isOpen={editOpen}
-                  onClick={inputcomplete}
-                >
-                  수정완료
-                </Commenteditcomletebutton>
-                <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
-                  수정하기
-                </Commenteditbutton>
-                <Commentdelitebutton btnColor="red">
-                  삭제하기
-                </Commentdelitebutton>
-              </Commentlayout>
-            );
-          })}
-        </>
-      ) : null}
-    </> */
-}
+
 export default Detailcommentitem;
 const Commentlayout = styled.div`
   width: 1020px;
