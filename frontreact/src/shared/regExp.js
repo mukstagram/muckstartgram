@@ -3,7 +3,7 @@ export const userIdCheck = (id) => {
   // 첫글자는 대소문자로
   // 5자 이상 9자 미만
   // 입력값 [대소문자,숫자]
-  let regExp = /[a-zA-Z0-9]{5,8}$/;
+  let regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,8}$/;
   return regExp.test(id);
 };
 

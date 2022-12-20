@@ -18,7 +18,7 @@ const Header = () => {
   }, [userName, userToken]);
 
   const getUser = () => {
-    setUserName(localStorage.getItem("username"));
+    setUserName(localStorage.getItem("nickname"));
     setUserToken(localStorage.getItem("token"));
   };
 
@@ -39,6 +39,7 @@ const Header = () => {
   //로그아웃 핸들러
   const logoutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("nickname");
     window.location.reload();
     dispatch(logOut());
   };

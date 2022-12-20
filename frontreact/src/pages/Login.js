@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // redux
@@ -13,16 +13,10 @@ import Input from "../elements/Input";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
 
-const Login = ({}) => {
+const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  // isLogin 값이 ture이면은 home으로 돌아감
-  const isLogin = useSelector((store) => store.loginmodule.isLogin);
-  if (isLogin) {
-    navigate("/");
-  }
 
   // // 아이디, 비밀번호, 비밀번호 확인
   const [loginId, setLoginId] = useState("");
