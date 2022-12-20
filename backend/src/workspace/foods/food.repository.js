@@ -31,6 +31,10 @@ class FoodRepository {
             userId,
         });
     };
+
+    deleteFood = async ({ foodId }) => {
+        return this.FoodLists.destroy({where: {foodId:foodId}});
+    }
 }
 
 module.exports = FoodRepository;

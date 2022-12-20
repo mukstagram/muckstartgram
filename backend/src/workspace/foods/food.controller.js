@@ -51,6 +51,29 @@ class FoodController {
         }
     };
 
+    deleteFoodList = async (req, res, next) => {
+        try {
+            const { foodId } = req.params;
+            const { userId } = res.locals.user;
+
+            await this.foodService.deleteFoodList({foodId, userId})
+
+            res.json({ message: "삭제 완료 하였습니다."})
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    editFoodList = async (req , res, next) => {
+        try {
+            const { foodId } = req.params;
+            const { category, title, content } = req.body
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
 }
 
 module.exports = FoodController

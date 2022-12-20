@@ -12,4 +12,6 @@ router.get('/',foodController.getFoodList);
 router.post('/',authUserMiddleware,upload.single('thumbnail'),foodController.createdFoodPost);
 router.get('/:foodId',foodController.getFoodDetail);
 router.get('/:foodId/comments',commentController.getComments);
+router.put('/:foodId');
+router.delete('/:foodId',foodController.deleteFoodList);
 module.exports = router;
