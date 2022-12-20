@@ -12,6 +12,11 @@ const app = express();
 const PORT = process.env.PORT;
 const cors = require('cors');
 
+const morgan = require('morgan');
+const Winston = require('./util/WinstonUtil.js')
+
+app.use(morgan(":method :status :url :response-time ms", { stream: Winston.stream }));
+
 //Body
 app.use(express.json());
 app.use(cookieParser());
