@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // axios instance 생성자 입니다.
 const api = axios.create({
@@ -27,10 +27,10 @@ const api = axios.create({
 
 export const apis = {
   //Home
-  foodlist: () => api.get('/foods'),
+  foodlist: () => api.get("/foods"),
 
   //foodPost
-  foodpost: (payload) => api.post('/foods', payload),
+  foodpost: (payload) => api.post("/foods", payload),
 
   //foodretouch
   foodget: (params) => api.get(`/foods/${params}`),
@@ -38,11 +38,11 @@ export const apis = {
 
   // login
   login: ({ loginId, password }) =>
-    api.post('/login', { loginId: loginId, password: password }),
+    api.post("/login", { loginId: loginId, password: password }),
 
   // signup
   signup: ({ loginId, password, nickname }) =>
-    api.post('/signup', {
+    api.post("/signup", {
       loginId: loginId,
       password: password,
       nickname: nickname,

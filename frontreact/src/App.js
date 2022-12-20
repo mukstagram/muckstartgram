@@ -14,7 +14,7 @@ const App = () => {
   // app이 실행됨과 동시에 login여부를 확인합니다.
   // 인자로는 아무것도 전달되지 않습니다.
   useEffect(() => {
-    dispatch(__loginCheck());
+    /* dispatch(__loginCheck()) */
   }, []);
 
   // 최상위 component이 App에서 Router연결
