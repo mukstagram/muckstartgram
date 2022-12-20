@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 // redux
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __signUp } from "../redux/modules/signupmodule";
 
 // instance
-import { userIdCheck, nickNameCheck, passwordCheck } from "../shared/regExp";
+import { userIdCheck, passwordCheck } from "../shared/regExp";
 
 // styled
 import styled from "styled-components";
@@ -19,11 +19,12 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
 
-  // isLogin 값이 ture이면은 home으로 돌아감
-  const isLogin = useSelector((store) => store.loginmodule.isLogin);
-  if (isLogin) {
-    navigate("/");
-  }
+  // // isLogin 값이 ture이면은 home으로 돌아감
+  // const isLogin = useSelector((store) => store.loginmodule.isLogin);
+  // if (isLogin) {
+  //   navigate("/");
+  // }
+  // console.log(isLogin);
 
   // 아이디, 비밀번호, 비밀번호 확인
   const [userId, setUserId] = useState("");
@@ -44,19 +45,21 @@ const SignUp = () => {
   const [isNickName, setIsNickName] = useState(false);
 
   // 아이디
-  const onChangeUserId = useCallback((e) => {
-    setUserId(e.target.value);
-    if (e.target.value.length < 5 || e.target.value.length > 8) {
+  const onChangeUserId = (e) => {
+    const userIdRegExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,8}$/;
+    const userIdCurrent = e.target.value;
+    setUserId(userIdCurrent);
+    if (!userIdRegExp.test(userIdCurrent)) {
       setUserIdMessage("아이디 형식이 맞지 않습니다.");
       setIsUserId(false);
     } else {
       setUserIdMessage("올바른 아이디 입니다.)");
       setIsUserId(true);
     }
-  }, []);
+  };
 
   // 비밀번호
-  const onChangePassword = useCallback((e) => {
+  const onChangePassword = (e) => {
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+=~₩])(?=.*[0-9]).{8,15}$/;
     const passwordCurrent = e.target.value;
@@ -69,24 +72,24 @@ const SignUp = () => {
       setPasswordMessage("안전한 비밀번호에요 :)");
       setIsPassword(true);
     }
-  }, []);
+  };
 
   // 비밀번호 확인
-  const onChangePasswordConfirm = useCallback((e) => {
+  const onChangePasswordConfirm = (e) => {
     const passwordConfirmCurrent = e.target.value;
     setPasswordConfirm(passwordConfirmCurrent);
 
-    if (password === passwordConfirmCurrent) {
-      setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
-      setIsPasswordConfirm(true);
-    } else {
+    if (password !== passwordConfirmCurrent) {
       setPasswordConfirmMessage("비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ");
       setIsPasswordConfirm(false);
+    } else {
+      setPasswordConfirmMessage("비밀번호를 똑같이 입력했어요 : )");
+      setIsPasswordConfirm(true);
     }
-  }, []);
+  };
 
   // 닉네임
-  const onChangeNickName = useCallback((e) => {
+  const onChangeNickName = (e) => {
     setNickName(e.target.value);
 
     if (e.target.value.length < 2 || e.target.value.length > 8) {
@@ -96,7 +99,7 @@ const SignUp = () => {
       setNickNameMessage("맛있는 별명이에요 :)");
       setIsNickName(true);
     }
-  }, []);
+  };
 
   const signUp = () => {
     if (userId === "") {
@@ -165,7 +168,7 @@ const SignUp = () => {
                 />
                 {userId.length > 0 ? (
                   <Text
-                    fs="14px"
+                    fs="12px"
                     fw="400"
                     color={`${isUserId ? "green" : "red"}`}
                     className={`message ${isUserId ? "success" : "error"}`}
@@ -173,8 +176,9 @@ const SignUp = () => {
                     {userIdMessage}
                   </Text>
                 ) : (
-                  <Text fs="14px" fw="400" color="black">
-                    영문자+숫자 조합으로 5자 이상 9자 미만으로 입력해주세요.
+                  <Text fs="12px" fw="400" color="black">
+                    영대문자,영소문자,숫자 조합으로 5자 이상 9자 미만으로
+                    입력해주세요.
                   </Text>
                 )}
                 {/* <Button type="button" size="medium">
@@ -188,7 +192,6 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePassword}
                   title="비밀번호"
-                  type="password"
                   typeTitle="password"
                   fs="14px"
                   fw="400"
@@ -196,7 +199,7 @@ const SignUp = () => {
                 />
                 {password.length > 0 ? (
                   <Text
-                    fs="14px"
+                    fs="12px"
                     fw="400"
                     color={`${isPassword ? "green" : "red"}`}
                     className={`message ${isPassword ? "success" : "error"}`}
@@ -204,8 +207,8 @@ const SignUp = () => {
                     {passwordMessage}
                   </Text>
                 ) : (
-                  <Text fs="14px" fw="400" color="black">
-                    숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요.
+                  <Text fs="12px" fw="400" color="black">
+                    영문자,특수문자,숫자 조합으로 8자리 이상 입력해주세요.
                   </Text>
                 )}
               </InputBox>
@@ -216,13 +219,12 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePasswordConfirm}
                   title="비밀번호 확인"
-                  type="password"
                   typeTitle="passwordConfirm"
                   placeholder="비밀번호 한번 더 입력해주세요"
                 />
                 {passwordConfirm.length > 0 ? (
                   <Text
-                    fs="14px"
+                    fs="12px"
                     fw="400"
                     color={`${isPasswordConfirm ? "green" : "red"}`}
                     className={`message ${
@@ -232,7 +234,7 @@ const SignUp = () => {
                     {passwordConfirmMessage}
                   </Text>
                 ) : (
-                  <Text fs="14px" fw="400" color="black">
+                  <Text fs="12px" fw="400" color="black">
                     비밀번호를 다시 한번 입력해주세요.
                   </Text>
                 )}
@@ -264,7 +266,7 @@ const SignUp = () => {
               </InputBox>
             </div>
             <ButtonSet>
-              <Button type="button" size="medium" onClick={() => signUp}>
+              <Button type="button" size="medium" onClick={signUp}>
                 회원가입하기
               </Button>
             </ButtonSet>
