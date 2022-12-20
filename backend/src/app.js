@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 
 app.use((req,res,next)=>{
     if (req.headers['content-type'] !== 'application/json') {
-        res.status(415).send('Forbidden');
+        res.status(403).send('Forbidden');
         return;
     }
     next();
