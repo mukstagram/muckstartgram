@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { apis } from "../../shared/api";
 
 //초기값
 const initialState = {
@@ -12,9 +12,8 @@ const initialState = {
 export const __postFood = createAsyncThunk(
   "postFood",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
-      await axios.post(`${process.env.REACT_APP_URL}/api/foods`, payload);
+      await apis.foodpost(payload);
       return thunkAPI.fulfillWithValue();
     } catch (err) {
       console.log(err);

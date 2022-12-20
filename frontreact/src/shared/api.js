@@ -2,20 +2,12 @@ import axios from "axios";
 
 // axios instance 생성자 입니다.
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_URL}/api/`,
+  baseURL: `${process.env.REACT_APP_URL}/api`,
   // headers: {
-  //   "content-type": "application/json;charset=UTF-8",
-  //   accept: "application/json,",
+  //   content-type: 'application/json;charset=UTF-8',
+  //   accept: 'application/json,',
   // },
 });
-
-// intercepter로 localstorage에 있는 token을 request header에 넣어 보내줍니다.
-// api.interceptors.request.use(
-//   function (config) {
-//     const accessToken = localStorage.getItem("token");
-//     if (accessToken) {
-//       config.headers.authorization = `Bearer ${accessToken}`;
-//     }
 
 //     return config;
 //   },
@@ -26,6 +18,16 @@ const api = axios.create({
 // );
 
 export const apis = {
+  //Home
+  foodlist: () => api.get("/foods"),
+
+  //foodPost
+  foodpost: (payload) => api.post("/foods", payload),
+
+  //foodretouch
+  foodget: (params) => api.get(`/foods/${params}`),
+  foodput: ({ formData, params }) => api.put(`/foods/${params}`, formData),
+
   // login
   login: ({ loginId, password }) =>
     api.post("/login", { loginId: loginId, password: password }),

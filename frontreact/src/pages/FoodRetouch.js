@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { __postFood } from '../redux/modules/foodPostmodule';
+import { __getTargetFood } from '../redux/modules/foodRetouchmodule';
 
-const FoodPost = () => {
+const FoodRetouch = () => {
+  const params = useParams().id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //불러온 특정 게시물
+  const target = useSelector((state) => state);
+  // console.log(target);
+  // console.log(params);
 
   //payload로 갈 formData
   const formData = new FormData();
@@ -146,7 +153,7 @@ const FoodPost = () => {
       formData.append('content', foodDesc);
       formData.append('thumbnail', imgFile);
       // 데이터 전달 명령 필요
-      dispatch(__postFood(formData));
+      dispatch(__postFood([formData, params]));
       //메인페이지로 이동
       alert('작성이 완료되었습니다!');
       navigate('/');
@@ -157,22 +164,14 @@ const FoodPost = () => {
 
   //취소버튼 onClick함수
   const postCancleClickHandler = () => {
-    if (window.confirm('글 작성을 취소하시겠습니까?')) {
-      navigate('/');
+    if (window.confirm('글 수정을 취소하시겠습니까?')) {
+      navigate(-1);
     }
   };
 
-  useEffect(() => {}, [
-    time,
-    foodName,
-    foodDesc,
-    timeErrormsg,
-    nameErrormsg,
-    descErrormsg,
-    imgErrormsg,
-    imgErrormsg2,
-    imgErrormsg3,
-  ]);
+  useEffect(() => {
+    dispatch(__getTargetFood(params));
+  }, []);
 
   return (
     <Wrap>
@@ -321,4 +320,4 @@ const CancleButton = styled.button`
     background-color: rgb(247, 169, 145);
   }
 `;
-export default FoodPost;
+export default FoodRetouch;
