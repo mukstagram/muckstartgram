@@ -1,4 +1,4 @@
-const { CommentError } = require('../../exceptions/index.exception');
+const { InvalidParamsError } = require('../../exceptions/index.exception');
 const CommentService = require('../comments/comment.service');
 class CommentController {
     commentService = new CommentService();
@@ -7,7 +7,14 @@ class CommentController {
         try {
             const { foodId } = req.params;
             const { comment } = req.body;
-            const userId = 1;
+            const { userId } = res.locals.user;
+
+            if (!userId) {
+                throw InvalidParamsError(
+                    '잘못된 데이터 형식입니다',
+                    'ParamsError'
+                );
+            }
 
             await this.commentService.createComment(userId, foodId, comment);
 
@@ -34,9 +41,16 @@ class CommentController {
 
     editComment = async (req, res, next) => {
         try {
-            const userId = 1;
+            const { userId } = res.locals.user;
             const { commentId } = req.params;
             const { comment } = req.body;
+
+            if (!userId) {
+                throw InvalidParamsError(
+                    '잘못된 데이터 형식입니다',
+                    'ParamsError'
+                );
+            }
 
             await this.commentService.editComment(userId, commentId, comment);
 
@@ -51,8 +65,15 @@ class CommentController {
 
     deleteComment = async (req, res, next) => {
         try {
-            const userId = 1;
+            const { userId } = res.locals.user;
             const { commentId } = req.params;
+
+            if (!userId) {
+                throw InvalidParamsError(
+                    '잘못된 데이터 형식입니다',
+                    'ParamsError'
+                );
+            }
 
             await this.commentService.deleteComment(commentId, userId);
 
