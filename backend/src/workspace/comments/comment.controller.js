@@ -10,7 +10,7 @@ class CommentController {
             const { userId } = res.locals.user;
 
             if (!userId) {
-                throw InvalidParamsError(
+                throw new InvalidParamsError(
                     '잘못된 데이터 형식입니다',
                     'ParamsError'
                 );
@@ -46,7 +46,7 @@ class CommentController {
             const { comment } = req.body;
 
             if (!userId) {
-                throw InvalidParamsError(
+                throw new InvalidParamsError(
                     '잘못된 데이터 형식입니다',
                     'ParamsError'
                 );
@@ -69,7 +69,7 @@ class CommentController {
             const { commentId } = req.params;
 
             if (!userId) {
-                throw InvalidParamsError(
+                throw new InvalidParamsError(
                     '잘못된 데이터 형식입니다',
                     'ParamsError'
                 );
