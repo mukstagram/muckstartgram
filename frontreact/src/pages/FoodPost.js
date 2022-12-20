@@ -8,6 +8,10 @@ import { __postFood } from '../redux/modules/foodPostmodule';
 const FoodPost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //payload로 갈 formData
+  const formData = new FormData();
+
   //에러메시지 관련
   const [timeErrormsg, setTimeErrormsg] = useState('');
   const [nameErrormsg, setNameErrormsg] = useState('');
@@ -51,13 +55,12 @@ const FoodPost = () => {
       }
     }
   };
-  const formData = new FormData();
+
   //업로드 이미지 관련
   const [imgFile, setImgFile] = useState('');
   const foodImgChangeHandler = (e) => {
     //첨부파일 정보 변수화
     let value = e.target.files[0];
-    console.log(value);
     setImgFile(value);
     if (imgErrormsg) {
       if (value) {
@@ -142,7 +145,6 @@ const FoodPost = () => {
       formData.append('title', foodName);
       formData.append('content', foodDesc);
       formData.append('thumbnail', imgFile);
-
       // 데이터 전달 명령 필요
       dispatch(__postFood(formData));
       //메인페이지로 이동
@@ -153,11 +155,13 @@ const FoodPost = () => {
     }
   };
 
+  //취소버튼 onClick함수
   const postCancleClickHandler = () => {
     if (window.confirm('글 작성을 취소하시겠습니까?')) {
       navigate('/');
     }
   };
+
   useEffect(() => {}, [
     time,
     foodName,
@@ -169,6 +173,7 @@ const FoodPost = () => {
     imgErrormsg2,
     imgErrormsg3,
   ]);
+
   return (
     <Wrap>
       <WrapWrap>
@@ -176,7 +181,7 @@ const FoodPost = () => {
           <div>
             식사 시간{' '}
             <TimeSelector onChange={timeChangeHandler}>
-              <option value="none">---선택---</option>
+              <option value="">---선택---</option>
               <option value="아침">아침</option>
               <option value="점심">점심</option>
               <option value="저녁">저녁</option>
