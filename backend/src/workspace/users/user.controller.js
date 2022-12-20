@@ -23,9 +23,6 @@ class UserController {
                 nickname,
             });
 
-            req.header({
-                'Content-Type': 'application/json',
-            });
             res.status(200).json({
                 message: '회원가입 성공',
                 type: 'sucess',
@@ -52,7 +49,6 @@ class UserController {
             req.get(process.env.COOKIE_NAME, `Bearer ${Authorization}`);
             res.header({
                 Authorization: `Bearer ${Authorization}`,
-                'Content-Type': 'application/json',
             }).send({
                 nickname: resultUser.nickname,
                 message: '로그인 성공',
