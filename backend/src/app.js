@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = process.env.PORT;
 const cors = require('cors');
+
 const morgan = require('morgan');
 const Winston = require('./util/WinstonUtil.js')
 
@@ -25,6 +26,14 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
 });
+
+app.use((req,res,next)=>{
+    if (req.headers['content-type'] !== 'application/json') {
+        res.status(403).send('Forbidden');
+        return;
+    }
+    next();
+})
 
 // 라우터 등록
 app.use('/api', routes);
