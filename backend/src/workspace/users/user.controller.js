@@ -47,7 +47,10 @@ class UserController {
             );
 
             req.get(process.env.COOKIE_NAME, `Bearer ${Authorization}`);
-            res.header({ Authorization: `Bearer ${Authorization}` }).send({
+            res.header({
+                Authorization: `Bearer ${Authorization}`,
+            }).send({
+                nickname: resultUser.nickname,
                 message: '로그인 성공',
                 type: 'sucess',
             });
