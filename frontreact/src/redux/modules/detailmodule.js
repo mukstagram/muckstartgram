@@ -15,7 +15,7 @@ export const __getFoodList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/foods/${payload}`
+        `${process.env.REACT_APP_URL}/api/foods/${payload}`
       ); //
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
@@ -30,7 +30,7 @@ export const __getComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/foods/${payload}/comments`
+        `${process.env.REACT_APP_URL}/api/foods/${payload}/comments`
       );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
@@ -46,7 +46,7 @@ export const __commentRegist = createAsyncThunk(
     try {
       console.log(newCommemt);
       const { data } = await axios.post(
-        `${process.env.REACT_APP_URL}/comment/${params}`,
+        `${process.env.REACT_APP_URL}/api/comment/${params}`,
         newCommemt
       );
       console.log(data);
