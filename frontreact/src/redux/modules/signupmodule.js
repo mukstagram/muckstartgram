@@ -17,8 +17,8 @@ export const __signUp = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.signup(payload);
+      window.alert("회원가입 성공!");
       console.log(data.data);
-      console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);

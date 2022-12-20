@@ -19,6 +19,12 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
 
+  // isLogin 값이 ture이면은 home으로 돌아감
+  const isLogin = useSelector((store) => store.loginmodule.isLogin);
+  if (isLogin) {
+    navigate("/");
+  }
+
   // 아이디, 비밀번호, 비밀번호 확인
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
