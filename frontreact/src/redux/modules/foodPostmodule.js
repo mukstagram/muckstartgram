@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { apis } from '../../shared/api';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apis } from "../../shared/api";
 
 //초기값
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 //thunk
 //생성페이지 음식 게시물 생성
 export const __postFood = createAsyncThunk(
-  'postFood',
+  "postFood",
   async (payload, thunkAPI) => {
     try {
       await apis.foodpost(payload);
@@ -24,7 +24,7 @@ export const __postFood = createAsyncThunk(
 
 //리듀서
 const foodPostmodule = createSlice({
-  name: 'foodpost',
+  name: "foodpost",
   initialState,
   reducers: {},
   //thunk용 리듀서

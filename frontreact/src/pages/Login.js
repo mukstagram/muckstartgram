@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import setLogin from "../redux/modules/loginmodule";
+import { __setLogin } from "../redux/modules/loginmodule";
 
 // function
 
@@ -13,12 +14,15 @@ import Button from "../elements/Button";
 import Text from "../elements/Text";
 
 const Login = ({}) => {
-  // const isLogin = useSelector((store) => store.user.is_login);
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (isLogin) history.push("/");
-  // });
+  // isLogin 값이 ture이면은 home으로 돌아감
+  const isLogin = useSelector((store) => store.loginmodule.isLogin);
+  if (isLogin) {
+    navigate("/");
+  }
 
   // // 아이디, 비밀번호, 비밀번호 확인
   const [loginId, setLoginId] = useState("");
@@ -26,12 +30,15 @@ const Login = ({}) => {
 
   const loginButtonHandler = (e) => {
     e.preventDefault();
-    dispatch(setLogin({ loginId: loginId, password: loginPassword }));
+
+    dispatch(__setLogin({ loginId: loginId, password: loginPassword }));
+
+    navigate("/");
   };
 
   return (
     <LogInBox>
-      <Text fs="36px" fw="700" mg="15px 0 15px 0">
+      <Text fs="36px" fw="700" mg="15px 0px 15px 0px">
         🙏 안녕하세요 🙏
       </Text>
       <Text fs="24px" fw="400" mg="0 0 36px 0">
@@ -40,7 +47,7 @@ const Login = ({}) => {
       <Text fs="24px" fw="400" mg="0 0 36px 0">
         🍗로그인 해주세요🍗
       </Text>
-      <FormSection onSubmit={loginButtonHandler}>
+      <FormSection>
         <div>
           <Text fs="20px" fw="400">
             아이디
@@ -60,6 +67,7 @@ const Login = ({}) => {
             <Input
               onChange={(e) => setLoginPassword(e.target.value)}
               title="비밀번호"
+              type="password"
               typeTitle="password"
               fs="14px"
               fw="400"
@@ -68,7 +76,7 @@ const Login = ({}) => {
           </InputBox>
         </div>
         <ButtonSet>
-          <Button type="button" size="medium">
+          <Button type="button" size="medium" onClick={loginButtonHandler}>
             로그인하기
           </Button>
         </ButtonSet>
@@ -82,7 +90,7 @@ const FormSection = styled.form`
   border-color: #f5b43d;
   background-color: #ffe5b5;
   width: 400px;
-  height: 500px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +15,15 @@ import Button from "../elements/Button";
 import Text from "../elements/Text";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
+  // isLogin 값이 ture이면은 home으로 돌아감
+  const isLogin = useSelector((store) => store.loginmodule.isLogin);
+  if (isLogin) {
+    navigate("/");
+  }
 
   // 아이디, 비밀번호, 비밀번호 확인
   const [userId, setUserId] = useState("");
@@ -128,6 +137,8 @@ const SignUp = () => {
     dispatch(
       __signUp({ loginId: userId, password: password, nickname: nickName })
     );
+
+    navigate("/");
   };
 
   return (
@@ -177,6 +188,7 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePassword}
                   title="비밀번호"
+                  type="password"
                   typeTitle="password"
                   fs="14px"
                   fw="400"
@@ -204,6 +216,7 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePasswordConfirm}
                   title="비밀번호 확인"
+                  type="password"
                   typeTitle="passwordConfirm"
                   placeholder="비밀번호 한번 더 입력해주세요"
                 />
@@ -251,7 +264,7 @@ const SignUp = () => {
               </InputBox>
             </div>
             <ButtonSet>
-              <Button type="button" size="medium" onClick={signUp}>
+              <Button type="button" size="medium" onClick={() => signUp}>
                 회원가입하기
               </Button>
             </ButtonSet>
