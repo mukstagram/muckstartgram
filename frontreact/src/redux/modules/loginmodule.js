@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 
 // instance
 import { apis } from "../../shared/api";
@@ -20,12 +19,10 @@ export const __setLogin = createAsyncThunk(
     try {
       await apis.login(payload).then((response) => {
         localStorage.setItem("token", response.headers.authorization);
-        // localStorage.setItem("nickname", response.headers.nickname);
-        console.log(response);
+        localStorage.setItem("nickname", response.data.nickname);
       });
       const data = await apis.login(payload);
       window.alert("로그인 성공!");
-      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -42,14 +39,6 @@ const loginmodule = createSlice({
     login: (state, action) => {
       state.loginInfo.nickname = action.payload.nickname;
       state.isLogin = true;
-    },
-    loginCheck: (state, action) => {
-      const tokeNicknameCheck = localStorage.getItem("nickname");
-      if (tokeNicknameCheck) {
-        login({ nickname: tokeNicknameCheck });
-      } else {
-        logOut();
-      }
     },
     logOut: (state, action) => {
       state.loginInfo.loginId = "";
@@ -76,30 +65,3 @@ const loginmodule = createSlice({
 
 export const { login, logOut, loginCheck } = loginmodule.actions;
 export default loginmodule.reducer;
-
-// // src/redux/modules/counterSlice.js
-
-// import { createSlice } from "@reduxjs/toolkit";
-
-// const initialState = {
-//   number: 0,
-// };
-
-// const counterSlice = createSlice({
-//   name: "counter",
-//   initialState,
-//   reducers: {
-//     addNumber: (state, action) => {
-//       state.number = state.number + action.payload;
-//     },
-
-//     minusNumber: (state, action) => {
-//       state.number = state.number - action.payload;
-//     },
-//   },
-// });
-
-// // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-// export const { addNumber, minusNumber } = counterSlice.actions;
-// // reducer 는 configStore에 등록하기 위해 export default 합니다.
-// export default counterSlice.reducer;

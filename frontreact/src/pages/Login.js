@@ -67,6 +67,7 @@ const Login = ({}) => {
             <Input
               onChange={(e) => setLoginPassword(e.target.value)}
               title="비밀번호"
+              type="password"
               typeTitle="password"
               fs="14px"
               fw="400"

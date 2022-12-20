@@ -188,6 +188,7 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePassword}
                   title="비밀번호"
+                  type="password"
                   typeTitle="password"
                   fs="14px"
                   fw="400"
@@ -215,6 +216,7 @@ const SignUp = () => {
                 <Input
                   onChange={onChangePasswordConfirm}
                   title="비밀번호 확인"
+                  type="password"
                   typeTitle="passwordConfirm"
                   placeholder="비밀번호 한번 더 입력해주세요"
                 />

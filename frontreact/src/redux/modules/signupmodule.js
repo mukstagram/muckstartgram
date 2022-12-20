@@ -3,9 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // instance
 import { apis } from "../../shared/api";
 
-// library
-// import { history } from "../config/configStore";
-
 const initialState = {
   signUpInfo: {},
   isLoading: false,
@@ -18,7 +15,6 @@ export const __signUp = createAsyncThunk(
     try {
       const data = await apis.signup(payload);
       window.alert("회원가입 성공!");
-      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
