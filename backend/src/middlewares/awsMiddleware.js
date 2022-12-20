@@ -18,6 +18,7 @@ const upload = multer({
         bucket: process.env.BUCKET,
         acl: 'public-read-write',
         contentType: multerS3.AUTO_CONTENT_TYPE,
+        limits: { fileSize: (1024 * 1024) * 3 },
         key: function (req, file, callback) {
             callback(null, `${Date.now()}_${file.originalname}`);
         },

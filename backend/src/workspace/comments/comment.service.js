@@ -1,5 +1,5 @@
 const CommentRepository = require('../comments/comment.repository');
-const PostRepository = require('../post/post.repository');
+const PostRepository = require('../foods/food.repository');
 const { Comments, FoodLists } = require('../../models');
 const { CommentError } = require('../../exceptions/index.exception');
 

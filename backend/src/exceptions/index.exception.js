@@ -38,5 +38,5 @@ module.exports = {
     InvalidParamsError,
     ValidationError,
     AuthenticationError,
-    CommentError,
+    CommentError
 };
