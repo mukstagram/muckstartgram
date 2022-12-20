@@ -1,14 +1,14 @@
 const CommentRepository = require('../comments/comment.repository');
-const PostRepository = require('../foods/food.repository');
+const FoodRepository = require('../foods/food.repository');
 const { Comments, FoodLists } = require('../../models');
 const { CommentError } = require('../../exceptions/index.exception');
 
 class CommentService {
     commentRepository = new CommentRepository(Comments);
-    postRepository = new PostRepository(FoodLists);
+    foodRepository = new FoodRepository(FoodLists);
 
     createComment = async (userId, foodId, comment) => {
-        const existPost = await this.postRepository.getFood({ foodId });
+        const existPost = await this.foodRepository.getFood({ foodId });
 
         if (!existPost) {
             throw new CommentError(
@@ -43,7 +43,7 @@ class CommentService {
     };
 
     getComments = async (foodId) => {
-        const existPost = await this.postRepository.getFood({ foodId });
+        const existPost = await this.foodRepository.getFood({ foodId });
 
         if (!existPost) {
             throw new CommentError(
