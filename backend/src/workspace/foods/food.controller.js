@@ -14,7 +14,7 @@ class FoodController {
 
             const { category,title,content } = req.body;
             const thumbnail = req.file.key
-            const { userId } = {userId:1}
+            const { userId } = res.locals.user
 
             if(!category | !title | !content | !userId){
                 throw new InvalidParamsError("생성 실패", "parmasError");
@@ -46,7 +46,6 @@ class FoodController {
             const result = await this.foodService.getFoodList();
 
             res.json({ data:result});
-
         } catch (error) {
             next(error);
         }
