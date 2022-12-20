@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const foodRouter = require("./post.route.js");
+const foodRouter = require("./food.route.js");
 const CommentRouter = require('./comment.route.js');
 
-router.use('/post',foodRouter);
+router.use('/foods',foodRouter);
 router.use('/comment', CommentRouter);
 router.use("/", require("./user.router.js"));
 
