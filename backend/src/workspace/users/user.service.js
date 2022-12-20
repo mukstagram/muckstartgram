@@ -17,7 +17,7 @@ class UserService {
             loginId,
         });
 
-        // body에서 받아온 loginId가 없을때
+        // body에서 받아온 loginId가 DB에 없을때
         if (!resultUser) {
             throw new InvalidParamsError('로그인 실패', 'badRequset', 400);
         }
@@ -47,7 +47,7 @@ class UserService {
         }
 
         // loginId 양식 확인
-        const idCondition = /^[A-Z][a-zA-Z0-9]{5,9}$/;
+        const idCondition = /^[a-zA-Z0-9]{5,9}$/;
         if (idCondition.test(loginId) === false) {
             throw new ValidationError(
                 '아이디 양식이 맞지않습니다.',
@@ -92,10 +92,10 @@ class UserService {
 
     //token 생성
     createToken = async ({ userId }) => {
-        const token = jwt.sign({ userId }, process.env.SECRET_KEY, {
+        const Authorization = jwt.sign({ userId }, process.env.SECRET_KEY, {
             expiresIn: '3d',
         });
-        return token;
+        return Authorization;
     };
 }
 

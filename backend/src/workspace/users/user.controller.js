@@ -42,10 +42,15 @@ class UserController {
                 password,
             });
 
-            const token = await this.userService.createToken(resultUser);
+            const Authorization = await this.userService.createToken(
+                resultUser
+            );
 
-            req.get(process.env.COOKIE_NAME, `Bearer ${token}`);
-            res.header({ token }).send({
+            req.get(process.env.COOKIE_NAME, `Bearer ${Authorization}`);
+            res.header({
+                Authorization: `Bearer ${Authorization}`,
+            }).send({
+                nickname: resultUser.nickname,
                 message: '로그인 성공',
                 type: 'sucess',
             });
