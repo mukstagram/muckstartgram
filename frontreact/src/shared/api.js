@@ -3,18 +3,18 @@ import axios from "axios";
 // axios instance 생성자 입니다.
 const api = axios.create({
   baseURL: `${process.env.REACT_APP_URL}/api`,
-  headers: {
-    "content-type": "application/json;charset=UTF-8",
-    accept: "application/json,",
-  },
+  // headers: {
+  //   "content-type": "application/json",
+  //   accept: "application/json",
+  // },
 });
 
-// api에 합의된 사항이 없어 일단 보류
 // intercepter로 cookie로 token을 만들어 보내줍니다.
 api.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("token");
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    config.headers["Authorization"] = `${accessToken}`;
+    // config.headers["Content-Type"] = "application/json";
     return config;
   },
   function (error) {

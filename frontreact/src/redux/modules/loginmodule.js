@@ -21,9 +21,8 @@ export const __setLogin = createAsyncThunk(
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("nickname", response.data.nickname);
       });
-      const data = await apis.login(payload);
       window.alert("로그인 성공!");
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue();
     } catch (error) {
       console.log(error);
       window.alert("회원정보가 없습니다. 회원가입을 해주세요!");
@@ -53,8 +52,8 @@ const loginmodule = createSlice({
     },
     [__setLogin.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.loginInfo = action.payload; // Store에 있는 서버에서 가져온 data를 넣습니다.
-      state.loginInfo.isLogin = true;
+      // state.loginInfo = action.payload; // Store에 있는 서버에서 가져온 data를 넣습니다.
+      state.isLogin = true;
     },
     [__setLogin.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
