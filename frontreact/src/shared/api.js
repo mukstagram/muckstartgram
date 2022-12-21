@@ -44,4 +44,6 @@ export const apis = {
       password: password,
       nickname: nickname,
     }),
+
+  //detail
 };
