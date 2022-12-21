@@ -177,7 +177,7 @@ const FoodRetouch = () => {
       // 데이터 전달 명령 필요
       dispatch(__putFood({ formData: formData, params: params })).then(() => {
         //메인페이지로 이동
-        alert('작성이 완료되었습니다!');
+        // alert('작성이 완료되었습니다!');
         navigate('/');
       });
       // //메인페이지로 이동
