@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { __postFood } from "../redux/modules/foodPostmodule";
+import React from 'react';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { __postFood } from '../redux/modules/foodPostmodule';
 
 const FoodPost = () => {
   const dispatch = useDispatch();
@@ -13,73 +13,73 @@ const FoodPost = () => {
   const formData = new FormData();
 
   //에러메시지 관련
-  const [timeErrormsg, setTimeErrormsg] = useState("");
-  const [nameErrormsg, setNameErrormsg] = useState("");
-  const [descErrormsg, setDescErrormsg] = useState("");
-  const [imgErrormsg, setImgErrormsg] = useState("");
-  const [imgErrormsg2, setImgErrormsg2] = useState("");
-  const [imgErrormsg3, setImgErrormsg3] = useState("");
+  const [timeErrormsg, setTimeErrormsg] = useState('');
+  const [nameErrormsg, setNameErrormsg] = useState('');
+  const [descErrormsg, setDescErrormsg] = useState('');
+  const [imgErrormsg, setImgErrormsg] = useState('');
+  const [imgErrormsg2, setImgErrormsg2] = useState('');
+  const [imgErrormsg3, setImgErrormsg3] = useState('');
 
   //식사시간 관련
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState('');
   const timeChangeHandler = (e) => {
     let value = e.target.value;
     setTime(value);
     if (timeErrormsg) {
       if (value) {
-        setTimeErrormsg("");
+        setTimeErrormsg('');
       }
     }
   };
 
   //음식이름 관련
-  const [foodName, setFoodName] = useState("");
+  const [foodName, setFoodName] = useState('');
   const foodNameChangeHandler = (e) => {
     let value = e.target.value;
     setFoodName(value);
     if (nameErrormsg) {
       if (value) {
-        setNameErrormsg("");
+        setNameErrormsg('');
       }
     }
   };
 
   //작성내용 관련
-  const [foodDesc, setFoodDesc] = useState("");
+  const [foodDesc, setFoodDesc] = useState('');
   const foodDescChangeHandler = (e) => {
     let value = e.target.value;
     setFoodDesc(value);
     if (descErrormsg) {
       if (value) {
-        setDescErrormsg("");
+        setDescErrormsg('');
       }
     }
   };
 
   //업로드 이미지 관련
-  const [imgFile, setImgFile] = useState("");
+  const [imgFile, setImgFile] = useState('');
   const foodImgChangeHandler = (e) => {
     //첨부파일 정보 변수화
     let value = e.target.files[0];
     setImgFile(value);
     if (imgErrormsg) {
       if (value) {
-        setImgErrormsg("");
+        setImgErrormsg('');
       }
       if (
-        imgFile.type !== "image/png" &&
-        imgFile.type !== "image/jpg" &&
-        imgFile.type !== "image/jpeg"
+        imgFile.type !== 'image/png' &&
+        imgFile.type !== 'image/jpg' &&
+        imgFile.type !== 'image/jpeg'
       ) {
-        setImgErrormsg2("확장자는 jpg, jpeg, png만 가능합니다.");
+        setImgErrormsg2('확장자는 jpg, jpeg, png만 가능합니다.');
       } else {
-        setImgErrormsg2("");
+        setImgErrormsg2('');
       }
       //사진 크기 유효성 검사
       if (imgFile.size > 3 * 1024 * 1024) {
-        setImgErrormsg3("파일의 최대 크기는 3mb입니다.");
+        setImgErrormsg3('파일의 최대 크기는 3mb입니다.');
       } else {
-        setImgErrormsg3("");
+        setImgErrormsg3('');
       }
     }
   };
@@ -88,42 +88,42 @@ const FoodPost = () => {
   const submitHandler = () => {
     //시간 선택 유무 유효성 검사
     if (!time) {
-      setTimeErrormsg("식사시간을 선택해주세요");
+      setTimeErrormsg('식사시간을 선택해주세요');
     } else {
-      setTimeErrormsg("");
+      setTimeErrormsg('');
     }
     //음식 이름 작성 유무 유효성 검사
     if (!foodName) {
-      setNameErrormsg("음식 이름을 입력해주세요");
+      setNameErrormsg('음식 이름을 입력해주세요');
     } else {
-      setNameErrormsg("");
+      setNameErrormsg('');
     }
     //내용 작성 유무 유효성 검사
     if (!foodDesc) {
-      setDescErrormsg("내용을 입력해주세요");
+      setDescErrormsg('내용을 입력해주세요');
     } else {
-      setDescErrormsg("");
+      setDescErrormsg('');
     }
     //사진 유무 유효성 검사
     if (!imgFile) {
-      setImgErrormsg("사진을 첨부해주세요");
+      setImgErrormsg('사진을 첨부해주세요');
     } else {
-      setImgErrormsg("");
+      setImgErrormsg('');
       //사진 확장자 유효성 검사
       if (
-        imgFile.type !== "image/png" &&
-        imgFile.type !== "image/jpg" &&
-        imgFile.type !== "image/jpeg"
+        imgFile.type !== 'image/png' &&
+        imgFile.type !== 'image/jpg' &&
+        imgFile.type !== 'image/jpeg'
       ) {
-        setImgErrormsg2("확장자는 jpg, jpeg, png만 가능합니다.");
+        setImgErrormsg2('확장자는 jpg, jpeg, png만 가능합니다.');
       } else {
-        setImgErrormsg2("");
+        setImgErrormsg2('');
       }
       //사진 크기 유효성 검사
       if (imgFile.size > 3 * 1024 * 1024) {
-        setImgErrormsg3("파일의 최대 크기는 3mb입니다.");
+        setImgErrormsg3('파일의 최대 크기는 3mb입니다.');
       } else {
-        setImgErrormsg3("");
+        setImgErrormsg3('');
       }
     }
 
@@ -141,24 +141,29 @@ const FoodPost = () => {
       !imgErrormsg3
     ) {
       //전달할 객체 생성
-      formData.append("category", time);
-      formData.append("title", foodName);
-      formData.append("content", foodDesc);
-      formData.append("thumbnail", imgFile);
+      formData.append('category', time);
+      formData.append('title', foodName);
+      formData.append('content', foodDesc);
+      formData.append('thumbnail', imgFile);
       // 데이터 전달 명령 필요
-      dispatch(__postFood(formData));
-      //메인페이지로 이동
-      alert("작성이 완료되었습니다!");
-      navigate("/");
+      // 비동기
+      dispatch(__postFood(formData)).then(() => {
+        //메인페이지로 이동
+        alert('작성이 완료되었습니다!');
+        navigate('/');
+      });
+      // 메인페이지로 이동
+      // alert('작성이 완료되었습니다!');
+      // navigate('/');
     } else {
-      alert("작성 내용을 확인해주세요!");
+      alert('작성 내용을 확인해주세요!');
     }
   };
 
   //취소버튼 onClick함수
   const postCancleClickHandler = () => {
-    if (window.confirm("글 작성을 취소하시겠습니까?")) {
-      navigate("/");
+    if (window.confirm('글 작성을 취소하시겠습니까?')) {
+      navigate('/');
     }
   };
 
@@ -179,7 +184,7 @@ const FoodPost = () => {
       <WrapWrap>
         <Partition>
           <div>
-            식사 시간{" "}
+            식사 시간{' '}
             <TimeSelector onChange={timeChangeHandler}>
               <option value="">---선택---</option>
               <option value="아침">아침</option>
@@ -191,7 +196,7 @@ const FoodPost = () => {
         </Partition>
         <Partition>
           <div>
-            음식 이름{" "}
+            음식 이름{' '}
             <InputTitleSpace
               type="text"
               maxLength="20"
@@ -203,7 +208,7 @@ const FoodPost = () => {
         </Partition>
         <Partition>
           <div>
-            내용 작성{" "}
+            내용 작성{' '}
             <InputDescSpace
               type="text"
               maxLength="100"
@@ -214,7 +219,7 @@ const FoodPost = () => {
           <ErrorMsg>{descErrormsg}</ErrorMsg>
         </Partition>
         <Partition>
-          업로드 사진{" "}
+          업로드 사진{' '}
           <InputImgSpace
             onChange={foodImgChangeHandler}
             type="file"
