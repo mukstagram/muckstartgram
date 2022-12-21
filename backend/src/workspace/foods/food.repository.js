@@ -33,7 +33,23 @@ class FoodRepository {
     };
 
     deleteFood = async ({ foodId }) => {
-        return this.FoodLists.destroy({where: {foodId:foodId}});
+        return await this.FoodLists.destroy({
+            where: { foodId:foodId }
+        });
+    }
+
+    editFood = async ({foodId,category, title, content, thumbnail}) => {
+        await this.FoodLists.update(
+            {
+                category,
+                title,
+                content,
+                thumbnail
+            },
+            {
+                where: { foodId },
+            }
+        );
     }
 }
 

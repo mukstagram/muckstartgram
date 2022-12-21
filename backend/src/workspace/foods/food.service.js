@@ -1,6 +1,7 @@
 const FoodRepository = require('./food.repository.js');
 const { FoodLists } = require('../../models');
 const { ValidationError } = require("../../exceptions/index.exception");
+const { deleteImage } = require("../../middlewares/awsMiddleware.js");
 
 class FoodService {
     constructor() {
@@ -23,8 +24,19 @@ class FoodService {
         return this.foodRepository.getFoodList();
     };
 
-    editFoodList = async ({foodId, userId, category, title, content}) => {
-        //이미지 로직을 여기로 옮겨야 할듯?...
+    editFoodList = async ({foodId,userId,category, title, content,thumbnail}) => {
+        const find = await this.foodRepository.getFood({foodId});
+        if(!find) {
+            throw new ValidationError("존재하지 않는 게시물 입니다.","notFoodList")
+        }
+        const findFood = find.get({plain: true});
+        if(findFood["userId"] !== userId){
+            throw new ValidationError("본인 게시글만 수정할 수 있습니다","userError");
+        }
+
+        await deleteImage(findFood['thumbnail']);
+
+        await this.foodRepository.editFood({foodId,category,title,content,thumbnail})
 
     };
 
@@ -33,15 +45,13 @@ class FoodService {
 
         if(!findFood){
             throw new ValidationError("존재하지 않는 게시물 입니다.","notFoodList")
-        }else if(findFood.get({plain: true})["userId"] !== userId['userId']){
+        }else if(findFood.get({plain: true})["userId"] !== userId){
             throw new ValidationError("본인 게시글만 삭제할 수 있습니다","userError");
         }
 
-        const result = await this.foodRepository.deleteFood({foodId});
-        if(!result){
-            throw new ValidationError("알수 없는 오류로 삭제를 실패 했습니다.");
-        }
+        await deleteImage(findFood.get({plain: true})['thumbnail']);
 
+        await this.foodRepository.deleteFood({foodId});
     };
 
 
