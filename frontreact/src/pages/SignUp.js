@@ -1,8 +1,7 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { __signUp } from "../redux/modules/signupmodule";
 
 // instance
@@ -15,8 +14,6 @@ import Button from "../elements/Button";
 import Text from "../elements/Text";
 
 const SignUp = () => {
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   // 아이디, 비밀번호, 비밀번호 확인
@@ -133,8 +130,6 @@ const SignUp = () => {
     dispatch(
       __signUp({ loginId: userId, password: password, nickname: nickName })
     );
-
-    navigate("/");
   };
 
   return (
