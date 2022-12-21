@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 require('dotenv').config();
 const multer = require('multer');
 const multerS3 = require('multer-s3');
+const { ValidationError } = require("../exceptions/index.exception");
 
 const s3 = new AWS.S3();
 
@@ -11,6 +12,19 @@ s3.config.update({
     region: process.env.AWS_REGION, // 사용자 사용 지역 (서울의 경우 ap-northeast-2)
 
 });
+
+const deleteImage = async function (imageName) {
+    try {
+        console.log(imageName);
+        await s3.deleteObject({
+            Bucket: process.env.BUCKET,
+            Key: imageName,
+        },(err,data)=>{
+        });
+    }catch (error){
+        return new ValidationError("이미지 파일을 삭제하지 못했습니다.","ImageDeleteError",400);
+    }
+}
 
 const upload = multer({
     storage: multerS3({
@@ -25,4 +39,4 @@ const upload = multer({
     }),
 });
 
-module.exports = upload;
+module.exports = {upload,deleteImage};

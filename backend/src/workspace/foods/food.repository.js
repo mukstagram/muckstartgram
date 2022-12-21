@@ -31,6 +31,26 @@ class FoodRepository {
             userId,
         });
     };
+
+    deleteFood = async ({ foodId }) => {
+        return await this.FoodLists.destroy({
+            where: { foodId:foodId }
+        });
+    }
+
+    editFood = async ({foodId,category, title, content, thumbnail}) => {
+        await this.FoodLists.update(
+            {
+                category,
+                title,
+                content,
+                thumbnail
+            },
+            {
+                where: { foodId },
+            }
+        );
+    }
 }
 
 module.exports = FoodRepository;
