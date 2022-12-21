@@ -23,8 +23,8 @@ export const __getTargetFood = createAsyncThunk(
   }
 );
 //수정페이지 게시물 수정
-export const __patchFood = createAsyncThunk(
-  'patchFood',
+export const __putFood = createAsyncThunk(
+  'putFood',
   async (payload, thunkAPI) => {
     try {
       await apis.foodput(payload);
@@ -63,15 +63,15 @@ const foodRetouchmodule = createSlice({
       // -------------------------------------------------------------
       //본문 추가하기
       // 로딩 시작
-      .addCase(__patchFood.pending, (state) => {
+      .addCase(__putFood.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__patchFood.fulfilled, (state, action) => {
+      .addCase(__putFood.fulfilled, (state, action) => {
         state.isLoading = false;
       })
       //로딩 완료. 실패 시
-      .addCase(__patchFood.rejected, (state, action) => {
+      .addCase(__putFood.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
