@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // axios instance 생성자 입니다.
 const api = axios.create({
@@ -12,8 +12,8 @@ const api = axios.create({
 // intercepter로 cookie로 token을 만들어 보내줍니다.
 api.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("token");
-    config.headers["Authorization"] = `${accessToken}`;
+    const accessToken = localStorage.getItem('token');
+    config.headers['Authorization'] = `${accessToken}`;
     // config.headers["Content-Type"] = "application/json";
     return config;
   },
@@ -25,22 +25,28 @@ api.interceptors.request.use(
 
 export const apis = {
   //Home
-  foodlist: () => api.get("/foods"),
+  foodlist: () => api.get('/foods'),
 
   //foodPost
-  foodpost: (payload) => api.post("/foods", payload),
+  foodpost: (payload) =>
+    api.post('/foods', payload, {
+      headers: { 'content-type': 'multipart/form-data' },
+    }),
 
   //foodretouch
   foodget: (params) => api.get(`/foods/${params}`),
-  foodput: ({ formData, params }) => api.put(`/foods/${params}`, formData),
+  foodput: ({ formData, params }) =>
+    api.put(`/foods/${params}`, formData, {
+      hedaers: { 'content-type': 'multipart/form-data' },
+    }),
 
   // login
   login: ({ loginId, password }) =>
-    api.post("/login", { loginId: loginId, password: password }),
+    api.post('/login', { loginId: loginId, password: password }),
 
   // signup
   signup: ({ loginId, password, nickname }) =>
-    api.post("/signup", {
+    api.post('/signup', {
       loginId: loginId,
       password: password,
       nickname: nickname,
