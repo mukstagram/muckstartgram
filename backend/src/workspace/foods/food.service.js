@@ -25,12 +25,10 @@ class FoodService {
     };
 
     editFoodList = async ({foodId,userId,category, title, content,thumbnail}) => {
-        const find = await this.foodRepository.getFood({foodId});
-        if(!find) {
+        const findFood = await this.foodRepository.getFood({foodId});
+        if(!findFood) {
             throw new ValidationError("존재하지 않는 게시물 입니다.","notFoodList")
-        }
-        const findFood = find.get({plain: true});
-        if(findFood["userId"] !== userId){
+        }else if(findFood["userId"] !== userId){
             throw new ValidationError("본인 게시글만 수정할 수 있습니다","userError");
         }
 
@@ -45,11 +43,11 @@ class FoodService {
 
         if(!findFood){
             throw new ValidationError("존재하지 않는 게시물 입니다.","notFoodList")
-        }else if(findFood.get({plain: true})["userId"] !== userId){
+        }else if(findFood["userId"] !== userId){
             throw new ValidationError("본인 게시글만 삭제할 수 있습니다","userError");
         }
 
-        await deleteImage(findFood.get({plain: true})['thumbnail']);
+        await deleteImage(findFood['thumbnail']);
 
         await this.foodRepository.deleteFood({foodId});
     };
