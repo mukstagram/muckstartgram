@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { apis } from "../../shared/api";
 
 //초기값
 const initialState = {
@@ -14,12 +15,10 @@ export const __getFoodList = createAsyncThunk(
   "getFoodList",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/api/foods/${payload}`
-      ); //
+      const { data } = await apis.detailfoodlist(payload);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -30,10 +29,9 @@ export const __postDelete = createAsyncThunk(
   "postDelete",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_URL}/api/foods/${payload}`);
+      await apis.detailPostDel(payload);
       return thunkAPI.fulfillWithValue();
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -44,12 +42,9 @@ export const __getComments = createAsyncThunk(
   "getComments",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/api/foods/${payload}/comments`
-      );
+      const { data } = await apis.detailcommentlist(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -57,18 +52,13 @@ export const __getComments = createAsyncThunk(
 // 상세페이지 댓글추가
 export const __commentRegist = createAsyncThunk(
   "commentRegist",
-  async ({ params, newCommemt }, thunkAPI) => {
+  async ({ params, newComment }, thunkAPI) => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_URL}/api/comment/${params}`,
-        newCommemt
-      );
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/api/foods/${params}/comments`
-      );
+      await apis.detailcommentpost({ params, newComment });
+      const { data } = await apis.detailcommentlist(params);
+      console.log(params);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -79,15 +69,10 @@ export const __commentDelete = createAsyncThunk(
   "commentDelete",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_URL}/api/comment/${payload[0]}`
-      );
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/api/foods/${payload[1]}/comments`
-      );
+      await apis.detailcommentdelete(payload[0]);
+      const { data } = await apis.detailcommentlist(payload[1]);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -106,7 +91,6 @@ export const __commentEdit = createAsyncThunk(
       );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }

@@ -44,14 +44,14 @@ const Detailcomment = () => {
     let value = e.target.value;
     setCommentInput(value);
   };
-  //댓글등록시 로그인안되어있을경우(토큰없을경우) 로그인페이지로 이동 구현해야함
+
   const commentregistbutton = () => {
-    const newCommemt = { comment: commentInput };
+    const newComment = { comment: commentInput };
     if (!storedNickname) {
       alert("로그인이 필요합니다!");
       navigate("/login");
     }
-    dispatch(__commentRegist({ params, newCommemt }));
+    dispatch(__commentRegist({ params, newComment }));
     setCommentInput("");
   };
 

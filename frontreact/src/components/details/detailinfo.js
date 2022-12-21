@@ -18,7 +18,10 @@ const Detailinfo = () => {
       <Imagelayout>
         {!isLoading ? (
           <Image
-            src={`${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`}
+            src={
+              foodList.thumbnail &&
+              `${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`
+            }
             alt={"사진을 불러오지 못했습니다"}
           />
         ) : (
