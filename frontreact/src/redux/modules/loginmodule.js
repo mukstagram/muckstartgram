@@ -19,7 +19,7 @@ export const __setLogin = createAsyncThunk(
         return thunkAPI.fulfillWithValue(response.data);
       });
       window.alert("로그인 성공!");
-      window.location.href = "http://localhost:3000/"; //"https://fe-deploy-nu.vercel.app/";
+      window.location.href = "https://fe-deploy-nu.vercel.app/";
     } catch (error) {
       window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
