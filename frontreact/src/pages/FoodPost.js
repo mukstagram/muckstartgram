@@ -109,7 +109,7 @@ const FoodPost = () => {
       setImgErrormsg('사진을 첨부해주세요');
     } else {
       setImgErrormsg('');
-      //사진 확장자 유효성 검사
+      // 사진 확장자 유효성 검사
       if (
         imgFile.type !== 'image/png' &&
         imgFile.type !== 'image/jpg' &&
@@ -149,7 +149,7 @@ const FoodPost = () => {
       // 비동기
       dispatch(__postFood(formData)).then(() => {
         //메인페이지로 이동
-        alert('작성이 완료되었습니다!');
+        // alert('작성이 완료되었습니다!');
         navigate('/');
       });
       // 메인페이지로 이동

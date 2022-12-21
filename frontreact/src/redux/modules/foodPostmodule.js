@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apis } from "../../shared/api";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { apis } from '../../shared/api';
 
 //초기값
 const initialState = {
@@ -10,13 +10,24 @@ const initialState = {
 //thunk
 //생성페이지 음식 게시물 생성
 export const __postFood = createAsyncThunk(
-  "postFood",
+  'postFood',
   async (payload, thunkAPI) => {
     try {
-      await apis.foodpost(payload);
+      await apis.foodpost(payload).then((res) => {
+        // 정상작동시 알림
+        if (res.status === 200) {
+          window.alert('작성이 완료되었습니다.');
+        }
+      });
       return thunkAPI.fulfillWithValue();
     } catch (err) {
-      console.log(err);
+      //토큰이 비정상적일 때 알림
+      // if (err.response.status === 400) {
+      //   window.alert(
+      //     '비정상적인 접근입니다.\n로그아웃 후 다시 로그인해주세요!'
+      //   );
+      // }
+      // console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
@@ -24,7 +35,7 @@ export const __postFood = createAsyncThunk(
 
 //리듀서
 const foodPostmodule = createSlice({
-  name: "foodpost",
+  name: 'foodpost',
   initialState,
   reducers: {},
   //thunk용 리듀서

@@ -7,8 +7,7 @@ import { __getFoodList } from "../../redux/modules/detailmodule";
 const Detailinfo = () => {
   const param = useParams().id;
   const dispatch = useDispatch();
-  const foodList = useSelector((state) => state.detailmodule.foodList);
-
+  const { foodList } = useSelector((state) => state.detailmodule);
   useEffect(() => {
     dispatch(__getFoodList(param));
   }, [dispatch]);
@@ -17,13 +16,16 @@ const Detailinfo = () => {
     <Detailcontainer>
       <Imagelayout>
         <Image
-          src={`${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`}
-          alt={"오류입니다!"}
+          src={
+            foodList.thumbnail &&
+            `${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`
+          }
+          alt={"사진을 불러오지 못했습니다"}
         />
       </Imagelayout>
       <Infolayout>
         <Infotitle>
-          {foodList.userId}의 {foodList.category} {foodList.title}
+          {foodList.nickname}의 {foodList.title}
         </Infotitle>
         <Infocontent>{foodList.content}</Infocontent>
       </Infolayout>
@@ -49,7 +51,6 @@ const Imagelayout = styled.div`
 const Image = styled.img`
   width: 450px;
   height: 450px;
-  object-fit: cover;
 `;
 const Infolayout = styled.div`
   width: 450px;
@@ -80,9 +81,4 @@ const Infocontent = styled.div`
   border-radius: 20px;
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-`;
-const Backpagebutton = styled.button`
-  width: 30px;
-  height: 50px;
-  margin-top: 90px;
 `;
