@@ -27,7 +27,6 @@ export const __postDelete = createAsyncThunk(
   "postDelete",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       await apis.detailPostDel(payload);
       return thunkAPI.fulfillWithValue();
     } catch (err) {

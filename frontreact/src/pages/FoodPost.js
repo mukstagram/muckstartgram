@@ -67,6 +67,7 @@ const FoodPost = () => {
         setImgErrormsg("");
       }
       if (
+        imgFile.type !== undefined &&
         imgFile.type !== "image/png" &&
         imgFile.type !== "image/jpg" &&
         imgFile.type !== "image/jpeg"
