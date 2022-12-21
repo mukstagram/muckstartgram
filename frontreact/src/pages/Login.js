@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // redux
-import { useDispatch, useSelector } from 'react-redux';
-import { __setLogin } from '../redux/modules/loginmodule';
+import { useDispatch, useSelector } from "react-redux";
+import { __setLogin } from "../redux/modules/loginmodule";
 
 // function
 
 // styled
-import styled from 'styled-components';
-import Input from '../elements/Input';
-import Button from '../elements/Button';
-import Text from '../elements/Text';
+import styled from "styled-components";
+import Input from "../elements/Input";
+import Button from "../elements/Button";
+import Text from "../elements/Text";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,18 +19,13 @@ const Login = () => {
   const dispatch = useDispatch();
 
   // // 아이디, 비밀번호, 비밀번호 확인
-  const [loginId, setLoginId] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [loginId, setLoginId] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
 
   const loginButtonHandler = (e) => {
     e.preventDefault();
     //서버통신이 끝난 후 페이지를 이동하고, 리렌더링을 위한 새로고침작동
-    dispatch(__setLogin({ loginId: loginId, password: loginPassword })).then(
-      () => {
-        navigate('/');
-        window.location.reload();
-      }
-    );
+    dispatch(__setLogin({ loginId: loginId, password: loginPassword }));
   };
 
   return (
