@@ -17,7 +17,7 @@ export const __signUp = createAsyncThunk(
       window.alert("회원가입 성공!");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
+      window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error);
     }
   }
