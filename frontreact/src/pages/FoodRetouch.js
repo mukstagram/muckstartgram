@@ -69,6 +69,7 @@ const FoodRetouch = () => {
         setImgErrormsg('');
       }
       if (
+        imgFile.type !== undefined &&
         imgFile.type !== 'image/png' &&
         imgFile.type !== 'image/jpg' &&
         imgFile.type !== 'image/jpeg'
@@ -94,6 +95,7 @@ const FoodRetouch = () => {
   const first = () => {
     if (!isLoading) {
       if (targetFood) {
+        console.log(targetFood);
         setTime(targetFood.category);
         setFoodName(targetFood.title);
         setFoodDesc(targetFood.content);
