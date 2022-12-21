@@ -25,6 +25,7 @@ class FoodRepository {
                 'title',
                 'thumbnail',
                 'content',
+                'category',
                 'userId',
                 [sequelize.col('User.nickname'), 'nickname'],
             ],
