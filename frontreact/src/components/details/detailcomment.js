@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,15 +9,17 @@ import {
 } from "../../redux/modules/detailmodule";
 import styled from "styled-components";
 import Detailcommentitem from "./detailcommentitem";
-import win from "global";
 
 const Detailcomment = () => {
   const params = useParams().id;
-
+  const { foodList } = useSelector((state) => state.detailmodule);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   //로컬스토리지에서 유저닉네임받아오기
   const storedNickname = localStorage.getItem("nickname");
+  const pageNickname = foodList.nickname;
+  console.log(pageNickname);
   //셀렉터로 comment데이터값받아오기
   const comments = useSelector((state) => state.detailmodule.comments);
 
@@ -61,14 +62,16 @@ const Detailcomment = () => {
   return (
     <>
       <LikeBackbox>
-        <Editbuttonbox>
-          <Editmainbutton onClick={EditPageBtn} color={"yellow"}>
-            수정하기
-          </Editmainbutton>
-          <Editmainbutton onClick={DeletePageBtn} color={"red"}>
-            삭제하기
-          </Editmainbutton>
-        </Editbuttonbox>
+        {storedNickname === pageNickname && (
+          <Editbuttonbox usernickname={storedNickname}>
+            <Editmainbutton onClick={EditPageBtn} color={"yellow"}>
+              수정하기
+            </Editmainbutton>
+            <Editmainbutton onClick={DeletePageBtn} color={"red"}>
+              삭제하기
+            </Editmainbutton>
+          </Editbuttonbox>
+        )}
         <Backpagebutton onClick={BackPageBtn} value={"main"}>
           메인으로
         </Backpagebutton>
@@ -148,6 +151,7 @@ const LikeBackbox = styled.div`
   display: flex;
 `;
 const Editbuttonbox = styled.div`
+  display: ${({ usernickname }) => (usernickname ? "block" : "none")};
   margin-left: 150px;
 `;
 const Editmainbutton = styled.button`

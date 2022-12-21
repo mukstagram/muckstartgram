@@ -16,14 +16,12 @@ export const __getFoodList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await apis.detailfoodlist(payload);
-
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
-// 백엔드에서 아직미구현
 //상세페이지 목록삭제
 export const __postDelete = createAsyncThunk(
   "postDelete",
@@ -56,7 +54,6 @@ export const __commentRegist = createAsyncThunk(
     try {
       await apis.detailcommentpost({ params, newComment });
       const { data } = await apis.detailcommentlist(params);
-      console.log(params);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -64,7 +61,6 @@ export const __commentRegist = createAsyncThunk(
   }
 );
 // 상세페이지 댓글삭제
-
 export const __commentDelete = createAsyncThunk(
   "commentDelete",
   async (payload, thunkAPI) => {
@@ -80,14 +76,11 @@ export const __commentDelete = createAsyncThunk(
 // 상세페이지 댓글수정
 export const __commentEdit = createAsyncThunk(
   "commentEdit",
-  async (payload, thunkAPI) => {
+  async ({ commentId, editCom, params }, thunkAPI) => {
     try {
-      await axios.patch(
-        `${process.env.REACT_APP_URL}/api/comment/${payload[0]}`,
-        payload[1]
-      );
+      await apis.detailcommentedit({ commentId, editCom, params });
       const { data } = await axios.get(
-        `${process.env.REACT_APP_URL}/api/foods/${payload[0]}/comments`
+        `${process.env.REACT_APP_URL}/api/foods/${params}/comments`
       );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
@@ -176,6 +169,21 @@ const foodListSlice = createSlice({
       })
       //로딩 완료. 실패 시
       .addCase(__commentDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      //댓글 수정하기
+      // 로딩 시작
+      .addCase(__commentEdit.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__commentEdit.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.comments = action.payload;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__commentEdit.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

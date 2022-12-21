@@ -7,7 +7,8 @@ import { __getFoodList } from "../../redux/modules/detailmodule";
 const Detailinfo = () => {
   const param = useParams().id;
   const dispatch = useDispatch();
-  const { foodList, isLoading } = useSelector((state) => state.detailmodule);
+  const { foodList } = useSelector((state) => state.detailmodule);
+  console.log(foodList);
 
   useEffect(() => {
     dispatch(__getFoodList(param));
@@ -16,21 +17,17 @@ const Detailinfo = () => {
   return (
     <Detailcontainer>
       <Imagelayout>
-        {!isLoading ? (
-          <Image
-            src={
-              foodList.thumbnail &&
-              `${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`
-            }
-            alt={"사진을 불러오지 못했습니다"}
-          />
-        ) : (
-          <span>로딩중입니다</span>
-        )}
+        <Image
+          src={
+            foodList.thumbnail &&
+            `${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`
+          }
+          alt={"사진을 불러오지 못했습니다"}
+        />
       </Imagelayout>
       <Infolayout>
         <Infotitle>
-          {foodList.userId}의 {foodList.category} {foodList.title}
+          {foodList.nickname}의{foodList.title}
         </Infotitle>
         <Infocontent>{foodList.content}</Infocontent>
       </Infolayout>
@@ -86,9 +83,4 @@ const Infocontent = styled.div`
   border-radius: 20px;
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
-`;
-const Backpagebutton = styled.button`
-  width: 30px;
-  height: 50px;
-  margin-top: 90px;
 `;
