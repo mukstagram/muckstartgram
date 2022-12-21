@@ -19,7 +19,6 @@ const Detailcomment = () => {
   //로컬스토리지에서 유저닉네임받아오기
   const storedNickname = localStorage.getItem("nickname");
   const pageNickname = foodList.nickname;
-  console.log(pageNickname);
   //셀렉터로 comment데이터값받아오기
   const comments = useSelector((state) => state.detailmodule.comments);
 
@@ -51,6 +50,9 @@ const Detailcomment = () => {
     if (!storedNickname) {
       alert("로그인이 필요합니다!");
       navigate("/login");
+    }
+    if (commentInput === "") {
+      alert("댓글을 입력해주세요");
     }
     dispatch(__commentRegist({ params, newComment }));
     setCommentInput("");
@@ -151,8 +153,8 @@ const LikeBackbox = styled.div`
   display: flex;
 `;
 const Editbuttonbox = styled.div`
-  display: ${({ usernickname }) => (usernickname ? "block" : "none")};
   margin-left: 150px;
+  position: absolute;
 `;
 const Editmainbutton = styled.button`
   width: 150px;
@@ -169,7 +171,8 @@ const Editmainbutton = styled.button`
   }
 `;
 const Backpagebutton = styled.button`
-  margin-left: 400px;
+  position: relative;
+  left: 850px;
   width: 150px;
   height: 50px;
   border-radius: 5px;

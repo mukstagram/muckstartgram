@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   __commentDelete,
@@ -11,6 +11,10 @@ import styled from "styled-components";
 const Detailcommentitem = ({ comment }) => {
   const dispatch = useDispatch();
   const params = useParams().id;
+  const { foodList } = useSelector((state) => state.detailmodule);
+  //로컬스토리지에서 유저닉네임받아오기
+  const storedNickname = localStorage.getItem("nickname");
+  const pageNickname = foodList.nickname;
   //수정하기open 스테이트
   const [editOpen, setEditOpen] = useState(true);
   //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
@@ -76,6 +80,7 @@ const Commentlayout = styled.div`
 const Commentbox = styled.div`
   width: 910px;
   margin-left: 10px;
+  overflow: auto;
 `;
 const Commenteditbutton = styled.button`
   width: 100px;

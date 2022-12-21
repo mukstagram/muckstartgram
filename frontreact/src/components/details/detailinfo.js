@@ -8,8 +8,6 @@ const Detailinfo = () => {
   const param = useParams().id;
   const dispatch = useDispatch();
   const { foodList } = useSelector((state) => state.detailmodule);
-  console.log(foodList);
-
   useEffect(() => {
     dispatch(__getFoodList(param));
   }, [dispatch]);
