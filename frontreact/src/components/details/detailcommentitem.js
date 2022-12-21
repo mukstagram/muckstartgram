@@ -1,10 +1,8 @@
-import axios from "axios";
 import React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  __getComments,
   __commentDelete,
   __commentEdit,
 } from "../../redux/modules/detailmodule";
@@ -22,21 +20,26 @@ const Detailcommentitem = ({ comment }) => {
   const [editComment, setEditComment] = useState("");
   //수정하기완료버튼,클릭시닫게하고 수정상태 post
   const ChangeCommentHandler = (e) => {
-    setEditComment(e.target.value);
+    let value = e.target.value;
+    setEditComment(value);
   };
   const inputcomplete = () => {
-    dispatch(__commentEdit(params, setEditComment()));
+    const editCom = { comment: editComment };
+    const commentId = comment.commentId;
+    dispatch(__commentEdit({ commentId, editCom, params }));
+    setEditComment("");
     setEditOpen(!editOpen);
   };
   return (
     <Commentlayout>
       <Commentbox>
         <Commentnickname>{comment.nickname}</Commentnickname>
-        <Commentcontent ket={comment.commentId} isOpen={editOpen}>
+        <Commentcontent key={comment.commentId} isOpen={editOpen}>
           {comment.comment}
         </Commentcontent>
         <Editcommentinput
           isOpen={editOpen}
+          value={editComment}
           placeholder="수정사항을입력해주세요"
           onChange={ChangeCommentHandler}
         />

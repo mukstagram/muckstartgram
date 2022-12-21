@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 // axios instance 생성자 입니다.
 
 const api = axios.create({
@@ -15,7 +15,6 @@ api.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("token");
     config.headers["Authorization"] = `${accessToken}`;
-    // config.headers["Content-Type"] = "application/json";
     return config;
   },
   function (error) {
@@ -72,9 +71,9 @@ export const apis = {
   detailfoodlist: (payload) => api.get(`/foods/${payload}`),
   detailPostDel: (payload) => api.delete(`/foods/${payload}`),
   detailcommentlist: (payload) => api.get(`/foods/${payload}/comments`),
-  detailcommentedit: (payload) => api.patch(`/comment/${payload}`, payload),
+  detailcommentedit: ({ commentId, editCom, params }) =>
+    api.patch(`/comment/${commentId}`, editCom, params),
   detailcommentpost: ({ params, newComment }) =>
     api.post(`/comment/${params}`, newComment),
-
   detailcommentdelete: (payload) => api.delete(`comment/${payload}`),
 };
