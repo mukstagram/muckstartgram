@@ -35,6 +35,7 @@ const Detailcomment = () => {
     if (window.confirm("삭제하시겠습니까?")) {
       dispatch(__postDelete(params));
       navigate("/");
+      window.location.reload();
     }
   };
 
