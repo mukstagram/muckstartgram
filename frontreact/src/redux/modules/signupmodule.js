@@ -17,7 +17,7 @@ export const __signUp = createAsyncThunk(
         return thunkAPI.fulfillWithValue(response.data);
       });
       window.alert("회원가입 성공!");
-      window.location.href = "https://fe-deploy-nu.vercel.app/";
+      window.location.href = "https://fe-before-css-deploy.vercel.app/";
     } catch (error) {
       window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data);
