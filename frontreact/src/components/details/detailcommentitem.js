@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   __commentDelete,
@@ -11,13 +11,18 @@ import styled from "styled-components";
 const Detailcommentitem = ({ comment }) => {
   const dispatch = useDispatch();
   const params = useParams().id;
+
+  //로컬스토리지에서 유저닉네임받아오기
+  const storedNickname = localStorage.getItem("nickname");
+  const commentNickname = comment.nickname;
+  console.log(commentNickname);
   //수정하기open 스테이트
   const [editOpen, setEditOpen] = useState(true);
   //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
   const inputopen = () => {
     setEditOpen(!editOpen);
   };
-  const [editComment, setEditComment] = useState("");
+  const [editComment, setEditComment] = useState(comment.comment);
   //수정하기완료버튼,클릭시닫게하고 수정상태 post
   const ChangeCommentHandler = (e) => {
     let value = e.target.value;
@@ -26,6 +31,9 @@ const Detailcommentitem = ({ comment }) => {
   const inputcomplete = () => {
     const editCom = { comment: editComment };
     const commentId = comment.commentId;
+    if (editComment === "") {
+      alert("수정 할 내용을 입력해주세요!");
+    }
     dispatch(__commentEdit({ commentId, editCom, params }));
     setEditComment("");
     setEditOpen(!editOpen);
@@ -40,23 +48,28 @@ const Detailcommentitem = ({ comment }) => {
         <Editcommentinput
           isOpen={editOpen}
           value={editComment}
-          placeholder="수정사항을입력해주세요"
           onChange={ChangeCommentHandler}
         />
       </Commentbox>
-      <Commenteditcomletebutton isOpen={editOpen} onClick={inputcomplete}>
-        수정완료
-      </Commenteditcomletebutton>
-      <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
-        수정하기
-      </Commenteditbutton>
-      <Commentdelitebutton
-        btnColor="red"
-        value={comment.commentId}
-        onClick={() => dispatch(__commentDelete([comment.commentId, params]))}
-      >
-        삭제하기
-      </Commentdelitebutton>
+      {storedNickname === commentNickname && (
+        <>
+          <Commenteditcomletebutton isOpen={editOpen} onClick={inputcomplete}>
+            수정완료
+          </Commenteditcomletebutton>
+          <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
+            수정하기
+          </Commenteditbutton>
+          <Commentdelitebutton
+            btnColor="red"
+            value={comment.commentId}
+            onClick={() =>
+              dispatch(__commentDelete([comment.commentId, params]))
+            }
+          >
+            삭제하기
+          </Commentdelitebutton>
+        </>
+      )}
     </Commentlayout>
   );
 };
@@ -76,6 +89,7 @@ const Commentlayout = styled.div`
 const Commentbox = styled.div`
   width: 910px;
   margin-left: 10px;
+  overflow: auto;
 `;
 const Commenteditbutton = styled.button`
   width: 100px;
