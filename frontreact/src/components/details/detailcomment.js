@@ -61,7 +61,7 @@ const Detailcomment = () => {
 
   useEffect(() => {
     dispatch(__getComments(params));
-  }, [dispatch]);
+  }, [params, dispatch]);
   return (
     <>
       <LikeBackbox>
