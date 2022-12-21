@@ -4,11 +4,7 @@ import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import { apis } from "../../shared/api";
 
 const initialState = {
-  loginInfo: {
-    loginId: "",
-    nickname: "",
-  },
-  isLogin: false,
+  response: {},
   isLoading: false,
   error: null,
 };
@@ -20,12 +16,12 @@ export const __setLogin = createAsyncThunk(
       await apis.login(payload).then((response) => {
         localStorage.setItem("token", response.headers.authorization);
         localStorage.setItem("nickname", response.data.nickname);
+        return thunkAPI.fulfillWithValue(response.data);
       });
       window.alert("로그인 성공!");
-      return thunkAPI.fulfillWithValue();
     } catch (error) {
       console.log(error);
-      window.alert("회원정보가 없습니다. 회원가입을 해주세요!");
+      window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -52,8 +48,8 @@ const loginmodule = createSlice({
     },
     [__setLogin.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      // state.loginInfo = action.payload; // Store에 있는 서버에서 가져온 data를 넣습니다.
-      state.isLogin = true;
+      state.response = action.payload; // Store에 있는 서버에서 가져온 data를 넣습니다.
+      // state.isLogin = true;
     },
     [__setLogin.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.

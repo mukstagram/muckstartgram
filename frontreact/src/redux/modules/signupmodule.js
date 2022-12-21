@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apis } from "../../shared/api";
 
 const initialState = {
-  signUpInfo: {},
+  response: {},
   isLoading: false,
   error: null,
 };
