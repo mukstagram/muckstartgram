@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Users } = require('../../models');
+const { Users, sequelize} = require('../../models');
 
 class FoodRepository {
     constructor(foodLists) {
@@ -18,7 +18,21 @@ class FoodRepository {
 
     getFood = async ({ foodId }) => {
         return await this.FoodLists.findOne({
+            raw: true,
             where: { foodId },
+            attributes: [
+                'foodId',
+                'title',
+                'thumbnail',
+                'content',
+                [sequelize.col('User.nickname'), 'nickname'],
+            ],
+            include: [
+                {
+                    model: Users,
+                    attributes: [],
+                },
+            ],
         });
     };
 
