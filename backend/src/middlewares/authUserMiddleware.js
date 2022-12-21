@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
 
         if (tokenType !== 'Bearer') {
             throw new AuthenticationError(
-                '전달된 쿠키에서 오류가 발생하였습니다.',
+                '전달된 토큰에 오류가 발생하였습니다.',
                 'badRequest'
             );
         }
