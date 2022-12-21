@@ -7,7 +7,7 @@ import { __getFoodList } from "../../redux/modules/detailmodule";
 const Detailinfo = () => {
   const param = useParams().id;
   const dispatch = useDispatch();
-  const foodList = useSelector((state) => state.detailmodule.foodList);
+  const { foodList, isLoading } = useSelector((state) => state.detailmodule);
 
   useEffect(() => {
     dispatch(__getFoodList(param));
@@ -16,10 +16,17 @@ const Detailinfo = () => {
   return (
     <Detailcontainer>
       <Imagelayout>
-        <Image
-          src={`${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`}
-          alt={"오류입니다!"}
-        />
+        {!isLoading ? (
+          <Image
+            src={
+              foodList.thumbnail &&
+              `${process.env.REACT_APP_IMGURL}/${foodList.thumbnail}`
+            }
+            alt={"사진을 불러오지 못했습니다"}
+          />
+        ) : (
+          <span>로딩중입니다</span>
+        )}
       </Imagelayout>
       <Infolayout>
         <Infotitle>
@@ -49,7 +56,6 @@ const Imagelayout = styled.div`
 const Image = styled.img`
   width: 450px;
   height: 450px;
-  object-fit: cover;
 `;
 const Infolayout = styled.div`
   width: 450px;

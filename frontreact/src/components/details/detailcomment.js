@@ -6,26 +6,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   __commentRegist,
   __getComments,
+  __postDelete,
 } from "../../redux/modules/detailmodule";
 import styled from "styled-components";
 import Detailcommentitem from "./detailcommentitem";
+import win from "global";
 
 const Detailcomment = () => {
   const params = useParams().id;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //임시토큰값위해서 사용
-  const [userName, setUserName] = useState("");
-  const [userToken, setUserToken] = useState("");
-  //임시토큰값,유저이름설정
-  const getUser = () => {
-    setUserName(localStorage.getItem("username"));
-    setUserToken(localStorage.getItem("token"));
-  };
+  //로컬스토리지에서 유저닉네임받아오기
+  const storedNickname = localStorage.getItem("nickname");
   //셀렉터로 comment데이터값받아오기
   const comments = useSelector((state) => state.detailmodule.comments);
-  console.log(comments);
+
   //메인페이지 버튼
   const BackPageBtn = () => {
     navigate("/");
@@ -34,9 +30,12 @@ const Detailcomment = () => {
   const EditPageBtn = () => {
     navigate(`/FoodRetouch/${params}`);
   };
-  // 삭제하기버튼
+  // 본문삭제하기버튼
   const DeletePageBtn = () => {
-    window.confirm("삭제하시겠습니까?");
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__postDelete(params));
+      navigate("/");
+    }
   };
 
   //댓글등록관련
@@ -45,17 +44,20 @@ const Detailcomment = () => {
     let value = e.target.value;
     setCommentInput(value);
   };
-  //댓글등록시 로그인안되어있을경우(토큰없을경우) 로그인페이지로 이동 구현해야함
+
   const commentregistbutton = () => {
-    const newCommemt = { comment: commentInput };
-    dispatch(__commentRegist({ params, newCommemt }));
+    const newComment = { comment: commentInput };
+    if (!storedNickname) {
+      alert("로그인이 필요합니다!");
+      navigate("/login");
+    }
+    dispatch(__commentRegist({ params, newComment }));
     setCommentInput("");
   };
 
   useEffect(() => {
     dispatch(__getComments(params));
-    getUser();
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <LikeBackbox>
@@ -72,7 +74,9 @@ const Detailcomment = () => {
         </Backpagebutton>
       </LikeBackbox>
       <Commentinputlayout>
-        <Inputnickname>usernickname</Inputnickname>
+        <Inputnickname>
+          {!storedNickname ? "usernickname" : storedNickname}
+        </Inputnickname>
         <Commentinput
           type="text"
           value={commentInput}

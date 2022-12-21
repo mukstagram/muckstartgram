@@ -3,33 +3,42 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { __getComments } from "../../redux/modules/detailmodule";
+import {
+  __getComments,
+  __commentDelete,
+  __commentEdit,
+} from "../../redux/modules/detailmodule";
 import styled from "styled-components";
 
 const Detailcommentitem = ({ comment }) => {
-  const params = useParams().id;
   const dispatch = useDispatch();
+  const params = useParams().id;
   //수정하기open 스테이트
   const [editOpen, setEditOpen] = useState(true);
   //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
   const inputopen = () => {
     setEditOpen(!editOpen);
   };
+  const [editComment, setEditComment] = useState("");
   //수정하기완료버튼,클릭시닫게하고 수정상태 post
+  const ChangeCommentHandler = (e) => {
+    setEditComment(e.target.value);
+  };
   const inputcomplete = () => {
+    dispatch(__commentEdit(params, setEditComment()));
     setEditOpen(!editOpen);
   };
-  useEffect(() => {
-    dispatch(__getComments(params));
-  }, [dispatch]);
   return (
     <Commentlayout>
       <Commentbox>
         <Commentnickname>{comment.nickname}</Commentnickname>
-        <Commentcontent isOpen={editOpen}>{comment.comment}</Commentcontent>
+        <Commentcontent ket={comment.commentId} isOpen={editOpen}>
+          {comment.comment}
+        </Commentcontent>
         <Editcommentinput
           isOpen={editOpen}
           placeholder="수정사항을입력해주세요"
+          onChange={ChangeCommentHandler}
         />
       </Commentbox>
       <Commenteditcomletebutton isOpen={editOpen} onClick={inputcomplete}>
@@ -38,7 +47,13 @@ const Detailcommentitem = ({ comment }) => {
       <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
         수정하기
       </Commenteditbutton>
-      <Commentdelitebutton btnColor="red">삭제하기</Commentdelitebutton>
+      <Commentdelitebutton
+        btnColor="red"
+        value={comment.commentId}
+        onClick={() => dispatch(__commentDelete([comment.commentId, params]))}
+      >
+        삭제하기
+      </Commentdelitebutton>
     </Commentlayout>
   );
 };
