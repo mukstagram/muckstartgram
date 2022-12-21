@@ -22,7 +22,6 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 export const apis = {
   //Home
   foodlist: () => api.get("/foods"),

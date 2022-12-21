@@ -24,6 +24,21 @@ export const __getFoodList = createAsyncThunk(
     }
   }
 );
+// 백엔드에서 아직미구현
+//상세페이지 목록삭제
+export const __postDelete = createAsyncThunk(
+  "postDelete",
+  async (payload, thunkAPI) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_URL}/api/foods/${payload}`);
+      return thunkAPI.fulfillWithValue();
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 // 상세페이지 댓글조회
 export const __getComments = createAsyncThunk(
   "getComments",
@@ -44,19 +59,59 @@ export const __commentRegist = createAsyncThunk(
   "commentRegist",
   async ({ params, newCommemt }, thunkAPI) => {
     try {
-      console.log(newCommemt);
-      const { data } = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_URL}/api/comment/${params}`,
         newCommemt
       );
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL}/api/foods/${params}/comments`
+      );
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
 );
+// 상세페이지 댓글삭제
+
+export const __commentDelete = createAsyncThunk(
+  "commentDelete",
+  async (payload, thunkAPI) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_URL}/api/comment/${payload[0]}`
+      );
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL}/api/foods/${payload[1]}/comments`
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+// 상세페이지 댓글수정
+export const __commentEdit = createAsyncThunk(
+  "commentEdit",
+  async (payload, thunkAPI) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_URL}/api/comment/${payload[0]}`,
+        payload[1]
+      );
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL}/api/foods/${payload[0]}/comments`
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 //리듀서
 const foodListSlice = createSlice({
   name: "usedetail",
@@ -79,6 +134,22 @@ const foodListSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+      //본문 삭제하기
+      // 로딩 시작
+      .addCase(__postDelete.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__postDelete.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.foodList = action.payload;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__postDelete.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
       // 댓글 조회하기
       // 로딩 시작
       .addCase(__getComments.pending, (state) => {
@@ -102,10 +173,25 @@ const foodListSlice = createSlice({
       //로딩 완료. 성공 시
       .addCase(__commentRegist.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.comments = [...state.comments];
+        state.comments = action.payload;
       })
       //로딩 완료. 실패 시
       .addCase(__commentRegist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      //댓글 삭제하기
+      // 로딩 시작
+      .addCase(__commentDelete.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__commentDelete.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.comments = action.payload;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__commentDelete.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
