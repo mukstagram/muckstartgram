@@ -27,10 +27,21 @@ export const __putFood = createAsyncThunk(
   'putFood',
   async (payload, thunkAPI) => {
     try {
-      await apis.foodput(payload);
+      await apis.foodput(payload).then((res) => {
+        //정상작동시 알림
+        if (res.status === 200) {
+          window.alert('수정이 완료되었습니다.');
+        }
+      });
       return thunkAPI.fulfillWithValue();
     } catch (err) {
-      console.log(err);
+      //토큰이 비정상적일 때 알림
+      // if (err.response.status === 400) {
+      //   window.alert(
+      //     '비정상적인 접근입니다.\n로그아웃 후 다시 로그인해주세요!'
+      //   );
+      // }
+      // console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }
