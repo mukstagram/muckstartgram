@@ -28,7 +28,7 @@
 
 - 해결
   로그인 또는 회원가입이 성공하면 메인페이지로 이동하도록 모듈 thunk 함수에
-  window.location.href = "https://fe-deploy-nu.vercel.app/"; 추가
+  window.location.href = "https://배포주소 메인페이지 URL/"; 추가
 
 ---
 
@@ -64,6 +64,50 @@
 - 해결
   git 에서 대문자 파일을 인식하도록 git config core.ignorecase false를 터미널에 입력하여 설정변경
   branch 삭제 후 재생성, local repo 삭제후 재생성
+
+---
+
+- 발생
+  dispatch에서 특정 값을 undefined로 읽는 문제
+
+- 원인
+  export로 내보내는 Thunk함수를 import하는데 중괄호를 사용하지 않았음
+
+- 해결
+  import 구문에서 Thunk함수를 {}중괄호로 감싸 문제를 해결
+
+---
+
+- 발생
+  axios를 통해 이미지 데이터가 정상적으로 전달되지 않는 문제
+
+- 원인
+  이미지 데이터를 File 객체형식으로 전달하려고 하여 객체가 빈 객체로 전달이 되었음
+
+- 해결
+  FormData에 저장하여 FormData를 직접 보내주는 것으로 해결
+
+---
+
+- 발생
+  이미지가 정상적인 확장자를 가지는데, 확장자 유효성 검사에서 오작동하는 현상
+
+- 원인
+  이미지가 input에 들어오고 setState가 batching되는데, setState되기 전 state값에 접근하여 이전 값을 state로 받아들여 유효성검사가 오작동 함
+
+- 해결
+  확장자를 검사하는 곳에 type가 undefined일 경우도 추가함
+
+---
+
+- 발생
+  post, put axios 명령 후 바로 렌더링 되지 않는 문제
+
+- 원인
+  dispatch가 비동기 처리방식이어서 데이터를 서버와 통신 하기 전에 navigate하여 통신되기 전 데이터가 불러짐
+
+- 해결
+  dispatch명령 뒤에 .then()을 사용하여 navigate하였음. 비동기처리인 dispatch를 동기적으로 처리하여 navigate하였을 때 정상적으로 렌더링 됨
 
 ---
 
