@@ -129,7 +129,7 @@ const Commentinput = styled.input`
   margin-left: 20px;
   border-radius: 5px;
   background-color: aliceblue;
-  font-size: 20px;
+  font-size: 25px;
   overflow: auto;
 `;
 const Commentbutton = styled.button`
@@ -138,6 +138,7 @@ const Commentbutton = styled.button`
   border-radius: 5px;
   background-color: #7de5ed;
   font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
   &:hover {
     background-color: #81c6e8;

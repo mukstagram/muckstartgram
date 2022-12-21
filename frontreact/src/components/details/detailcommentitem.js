@@ -15,7 +15,6 @@ const Detailcommentitem = ({ comment }) => {
   //로컬스토리지에서 유저닉네임받아오기
   const storedNickname = localStorage.getItem("nickname");
   const commentNickname = comment.nickname;
-  console.log(commentNickname);
   //수정하기open 스테이트
   const [editOpen, setEditOpen] = useState(true);
   //수정하기버튼,수정완료버튼으로 변경 수정하기input창오픈
@@ -104,6 +103,7 @@ const Commenteditbutton = styled.button`
     background-color: #ffe15d;
   }
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  font-weight: 800;
 `;
 const Commenteditcomletebutton = styled.button`
   width: 100px;
@@ -113,6 +113,7 @@ const Commenteditcomletebutton = styled.button`
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
   &:hover {
     background-color: #8ec3b0;
@@ -127,6 +128,7 @@ const Commentdelitebutton = styled.button`
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
   &:hover {
     background-color: #dc3535;
@@ -138,9 +140,11 @@ const Editcommentinput = styled.input`
   outline: none;
   background-color: aliceblue;
   display: ${({ isOpen }) => (isOpen ? "none" : "block")};
+  font-size: 18px;
 `;
 const Commentcontent = styled.p`
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  font-size: 18px;
 `;
 const Commentnickname = styled.p`
   font-weight: 800;
