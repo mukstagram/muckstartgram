@@ -3,18 +3,13 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __postFood } from '../redux/modules/foodPostmodule';
+import { __putFood } from '../redux/modules/foodRetouchmodule';
 import { __getTargetFood } from '../redux/modules/foodRetouchmodule';
 
 const FoodRetouch = () => {
   const params = useParams().id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //불러온 특정 게시물
-  const target = useSelector((state) => state);
-  // console.log(target);
-  // console.log(params);
 
   //payload로 갈 formData
   const formData = new FormData();
@@ -91,6 +86,33 @@ const FoodRetouch = () => {
     }
   };
 
+  //불러온 특정 게시물
+  const { isLoading, TargetFood } = useSelector(
+    (state) => state.foodRetouchmodule
+  );
+  const targetFood = TargetFood.data;
+  const first = () => {
+    if (!isLoading) {
+      if (targetFood) {
+        setTime(targetFood.category);
+        setFoodName(targetFood.title);
+        setFoodDesc(targetFood.content);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   dispatch(__getTargetFood(params)).then(()=>{
+  //     first();
+  //   })
+  // }, []);
+  useEffect(() => {
+    dispatch(__getTargetFood(params));
+  }, []);
+  useEffect(() => {
+    first();
+  }, [targetFood]);
+
   //등록버튼 onClcik함수
   const submitHandler = () => {
     //시간 선택 유무 유효성 검사
@@ -153,10 +175,14 @@ const FoodRetouch = () => {
       formData.append('content', foodDesc);
       formData.append('thumbnail', imgFile);
       // 데이터 전달 명령 필요
-      dispatch(__postFood([formData, params]));
-      //메인페이지로 이동
-      alert('작성이 완료되었습니다!');
-      navigate('/');
+      dispatch(__putFood({ formData: formData, params: params })).then(() => {
+        //메인페이지로 이동
+        alert('작성이 완료되었습니다!');
+        navigate('/');
+      });
+      // //메인페이지로 이동
+      // alert('작성이 완료되었습니다!');
+      // navigate('/');
     } else {
       alert('작성 내용을 확인해주세요!');
     }
@@ -165,13 +191,9 @@ const FoodRetouch = () => {
   //취소버튼 onClick함수
   const postCancleClickHandler = () => {
     if (window.confirm('글 수정을 취소하시겠습니까?')) {
-      navigate(-1);
+      navigate(`/detail/${params}`);
     }
   };
-
-  useEffect(() => {
-    dispatch(__getTargetFood(params));
-  }, []);
 
   return (
     <Wrap>
@@ -179,7 +201,7 @@ const FoodRetouch = () => {
         <Partition>
           <div>
             식사 시간{' '}
-            <TimeSelector onChange={timeChangeHandler}>
+            <TimeSelector value={time} onChange={timeChangeHandler}>
               <option value="">---선택---</option>
               <option value="아침">아침</option>
               <option value="점심">점심</option>
@@ -193,6 +215,7 @@ const FoodRetouch = () => {
             음식 이름{' '}
             <InputTitleSpace
               type="text"
+              value={foodName}
               maxLength="20"
               placeholder="음식이름을 입력해주세요"
               onChange={foodNameChangeHandler}
@@ -205,6 +228,7 @@ const FoodRetouch = () => {
             내용 작성{' '}
             <InputDescSpace
               type="text"
+              value={foodDesc}
               maxLength="100"
               placeholder="내용을 입력해주세요"
               onChange={foodDescChangeHandler}

@@ -1,55 +1,55 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { logOut } from "../../redux/modules/loginmodule";
+import { logOut } from '../../redux/modules/loginmodule';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [userName, setUserName] = useState("");
-  const [userToken, setUserToken] = useState("");
+  const [userName, setUserName] = useState('');
+  const [userToken, setUserToken] = useState('');
 
   useEffect(() => {
     getUser();
   }, [userName, userToken]);
 
   const getUser = () => {
-    setUserName(localStorage.getItem("nickname"));
-    setUserToken(localStorage.getItem("token"));
+    setUserName(localStorage.getItem('nickname'));
+    setUserToken(localStorage.getItem('token'));
   };
 
   //글작성 이동핸들러
   const foodPostHandler = () => {
     if (userToken) {
-      navigate("/foodPost");
+      navigate('/foodPost');
     } else if (!userToken) {
       if (
         window.confirm(
-          "글 작성은 로그인 이후 가능합니다.\n로그인 페이지로 이동하시겠습니까?"
+          '글 작성은 로그인 이후 가능합니다.\n로그인 페이지로 이동하시겠습니까?'
         )
       ) {
-        navigate("/login");
+        navigate('/login');
       }
     }
   };
   //로그아웃 핸들러
   const logoutHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("nickname");
+    localStorage.removeItem('token');
+    localStorage.removeItem('nickname');
     window.location.reload();
     dispatch(logOut());
   };
   //로그인 이동 핸들러
   const loginHandler = () => {
-    navigate("/login");
+    navigate('/login');
   };
   //회원가입 이동 핸들러
   const signupHandler = () => {
-    navigate("/signUp");
+    navigate('/signUp');
   };
 
   return (
@@ -66,7 +66,7 @@ const Header = () => {
         <WithoutTokenButtonStyle userToken={userToken} onClick={signupHandler}>
           회원가입
         </WithoutTokenButtonStyle>
-        <NickTitle>닉네임</NickTitle>
+        <NickTitle userName={userName}>{userName}님</NickTitle>
       </WrapButton>
     </Wrapheader>
   );
@@ -129,7 +129,7 @@ const WithoutTokenButtonStyle = styled.button`
   background-color: #fcf9be;
   border-radius: 5px;
   user-select: none;
-  display: ${({ userToken }) => (userToken ? "none" : "block")};
+  display: ${({ userToken }) => (userToken ? 'none' : 'block')};
   cursor: pointer;
   &:hover {
     background-color: #ece9a6;
@@ -145,7 +145,7 @@ const WithTokenButtonStyle = styled.button`
   background-color: #fcf9be;
   border-radius: 5px;
   user-select: none;
-  display: ${({ userToken }) => (userToken ? "block" : "none")};
+  display: ${({ userToken }) => (userToken ? 'block' : 'none')};
   cursor: pointer;
   &:hover {
     background-color: #ece9a6;
@@ -155,7 +155,7 @@ const NickTitle = styled.div`
   font-size: large;
   font-weight: 600;
   margin-right: 5px;
-  display: ${({ userToken }) => (userToken ? "block" : "none")};
+  display: ${({ userName }) => (userName ? 'block' : 'none')};
 `;
 
 export default Header;
