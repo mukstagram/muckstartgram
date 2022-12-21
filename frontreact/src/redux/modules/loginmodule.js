@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // instance
 import { apis } from "../../shared/api";
@@ -20,9 +20,8 @@ export const __setLogin = createAsyncThunk(
       });
       window.alert("로그인 성공!");
     } catch (error) {
-      console.log(error);
       window.alert(error.response.data.errorMessage);
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
