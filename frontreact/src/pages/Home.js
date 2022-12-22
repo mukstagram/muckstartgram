@@ -16,8 +16,17 @@ const Home = () => {
 
   return (
     <Wrap>
+      <div style={{ height: '100px', backgroundColor: '#fafafa ' }}></div>
       <MealTime>
-        <div>아침</div>
+        <div
+          style={{
+            fontSize: '25px',
+            textAlign: 'center',
+            letterSpacing: '3px',
+          }}
+        >
+          아침
+        </div>
       </MealTime>
       {isLoading ? (
         <WrapItems>
@@ -36,7 +45,15 @@ const Home = () => {
         </WrapItems>
       ) : null}
       <MealTime>
-        <div>점심</div>
+        <div
+          style={{
+            fontSize: '25px',
+            textAlign: 'center',
+            letterSpacing: '3px',
+          }}
+        >
+          점심
+        </div>
       </MealTime>
       {isLoading ? (
         <WrapItems>
@@ -55,7 +72,15 @@ const Home = () => {
         </WrapItems>
       ) : null}
       <MealTime>
-        <div>저녁</div>
+        <div
+          style={{
+            fontSize: '25px',
+            textAlign: 'center',
+            letterSpacing: '3px',
+          }}
+        >
+          저녁
+        </div>
       </MealTime>
       {isLoading ? (
         <WrapItems>
@@ -78,7 +103,9 @@ const Home = () => {
 };
 
 const Wrap = styled.div`
-  margin-top: 100px;
+  background-color: #fafafa;
+  padding-left: 24px;
+  padding-right: 24px;
 `;
 
 const MealTime = styled.div`
@@ -97,6 +124,7 @@ const MealTime = styled.div`
 `;
 
 const WrapItems = styled.div`
+  padding-left: 7px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
