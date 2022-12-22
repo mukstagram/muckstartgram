@@ -226,10 +226,11 @@ const FoodRetouch = () => {
           <ErrorMsg>{nameErrormsg}</ErrorMsg>
         </Partition>
         <Partition>
-          <div>
-            내용 작성{' '}
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <div>내용 작성 </div>
             <InputDescSpace
               type="text"
+              cols="13"
               value={foodDesc}
               maxLength="100"
               placeholder="내용을 입력해주세요"
@@ -299,7 +300,7 @@ const InputTitleSpace = styled.input`
   font-size: 25px;
 `;
 
-const InputDescSpace = styled.input`
+const InputDescSpace = styled.textarea`
   width: 500px;
   height: 200px;
   font-size: 25px;
