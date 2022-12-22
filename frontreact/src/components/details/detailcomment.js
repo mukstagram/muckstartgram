@@ -137,12 +137,13 @@ const Commentbutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: #7de5ed;
+  background-color: #c1efff;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 900;
+
   cursor: pointer;
   &:hover {
-    background-color: #81c6e8;
+    background-color: #8fe3cf;
   }
 `;
 
@@ -165,11 +166,11 @@ const Editmainbutton = styled.button`
   background-color: #e8f3d6;
   font-size: 30px;
   background-color: ${({ color }) =>
-    color === "yellow" ? "#f0ff42" : color === "red" ? "#ffadbc" : null};
+    color === "yellow" ? "#F5E8C7" : color === "red" ? "#F4BFBF" : null};
   cursor: pointer;
   &:hover {
     background-color: ${({ color }) =>
-      color === "yellow" ? "#ffe15d" : color === "red" ? "#dc3535" : "#dae6c8"};
+      color === "yellow" ? "#ffe15d" : color === "red" ? "#f68989" : "#dae6c8"};
   }
 `;
 const Backpagebutton = styled.button`

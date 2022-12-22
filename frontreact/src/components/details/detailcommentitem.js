@@ -94,7 +94,7 @@ const Commenteditbutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: #f0ff42;
+  background-color: #ffdeb4;
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
@@ -109,14 +109,15 @@ const Commenteditcomletebutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: #b6e2a1;
+  background-color: #ffc090;
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
   font-weight: 800;
+
   cursor: pointer;
   &:hover {
-    background-color: #8ec3b0;
+    background-color: #ffe15d;
   }
   display: ${({ isOpen }) => (isOpen ? "none" : "block")};
 `;
@@ -129,9 +130,10 @@ const Commentdelitebutton = styled.button`
   margin-right: 8px;
   font-size: 18px;
   font-weight: 800;
+
   cursor: pointer;
   &:hover {
-    background-color: #dc3535;
+    background-color: #f68989;
   }
 `;
 const Editcommentinput = styled.input`
