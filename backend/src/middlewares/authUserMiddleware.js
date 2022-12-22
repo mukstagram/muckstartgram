@@ -5,10 +5,15 @@ const { AuthenticationError } = require('../exceptions/index.exception');
 
 module.exports = async (req, res, next) => {
     try {
-        // const tokenValue = req.header(process.env.COOKIE_NAME);
-        // console.log(tokenValue);
         const authorization = req.header(process.env.COOKIE_NAME);
         const [tokenType, tokenValue] = authorization.split(' ');
+
+        if (authorization === 'null') {
+            throw new AuthenticationError(
+                '로그인 후 이용 가능한 기능입니다.',
+                'badRequest'
+            );
+        }
 
         if (tokenType !== 'Bearer') {
             throw new AuthenticationError(
