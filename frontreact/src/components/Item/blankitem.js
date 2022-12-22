@@ -16,7 +16,8 @@ const Wrap = styled.div`
   width: 180px;
   height: 220px;
   display: block;
-  border: 1px solid lightgrey;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
   margin-bottom: 10px;
 `;
 
@@ -24,7 +25,7 @@ const ImgSpace = styled.div`
   width: 180px;
   height: 180px;
   margin-bottom: 5px;
-  background-color: gray;
+  background-color: #b4b4b4;
 `;
 
 const WrapTitle = styled.div`
