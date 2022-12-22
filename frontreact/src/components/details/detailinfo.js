@@ -8,10 +8,9 @@ const Detailinfo = () => {
   const param = useParams().id;
   const dispatch = useDispatch();
   const { foodList } = useSelector((state) => state.detailmodule);
-  console.log(foodList);
   useEffect(() => {
     dispatch(__getFoodList(param));
-  }, [dispatch]);
+  }, [dispatch, param]);
 
   return (
     <Detailcontainer>
@@ -28,7 +27,9 @@ const Detailinfo = () => {
         <Infotitle>
           {foodList.nickname}의 {foodList.category} {foodList.title}
         </Infotitle>
-        <Infocontent>{foodList.content}</Infocontent>
+        <Infocontent>
+          <Contentcontent>{foodList.content}</Contentcontent>
+        </Infocontent>
       </Infolayout>
     </Detailcontainer>
   );
@@ -61,25 +62,28 @@ const Infolayout = styled.div`
 `;
 const Infotitle = styled.div`
   width: 450px;
-  height: auto;
+  height: 50px;
   background-color: #ffe5b5;
-  font-size: 25px;
+  font-size: 21px;
   text-align: center;
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  font-family: "Jalnan";
 `;
 
 const Infocontent = styled.div`
   width: 450px;
-  height: 395px;
+  height: 385px;
   background-color: #ffe5b5;
   margin-top: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
+  font-size: 30px;
   border-radius: 20px;
   border: 5px solid #f5b43d;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+  overflow: auto;
+`;
+const Contentcontent = styled.p`
+  padding-left: 10px;
 `;
