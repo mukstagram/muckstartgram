@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { logOut } from '../../redux/modules/loginmodule';
 
@@ -54,7 +54,19 @@ const Header = () => {
 
   return (
     <Wrapheader>
-      <PageTitle>먹스타그램</PageTitle>
+      <Link
+        style={{
+          marginLeft: '500px',
+          fontSize: '40px',
+          fontWeight: 'bold',
+          color: 'black',
+          textDecoration: 'none',
+          userSelect: 'none',
+        }}
+        to="/"
+      >
+        먹스타그램
+      </Link>
       <WrapButton>
         <ButtonStyle onClick={foodPostHandler}>글 작성</ButtonStyle>
         <WithTokenButtonStyle userToken={userToken} onClick={logoutHandler}>
@@ -89,12 +101,6 @@ const Wrapheader = styled.div`
   align-items: center;
   justify-content: space-between;
   color: white;
-`;
-
-const PageTitle = styled.h1`
-  margin-left: 500px;
-  font-size: 40px;
-  font-weight: bold;
 `;
 
 const WrapButton = styled.div`
