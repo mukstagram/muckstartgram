@@ -1,17 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// connected-react-router
+// Connected React Router란 리덕스에서 주소 변경 및 확인하기 위해 history객체를 관리, 필요에 의해 꺼내쓸 수 있는 라이브러리입니다.
+// 설치방법 : yarn add connected-react-router
+// import { ConnectedRouter } from "connected-react-router";
+// import { history } from "./redux/config/configStore";
+
+// redux
+import store from "./redux/config/configStore";
+import { Provider } from "react-redux";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
+    {/* <ConnectedRouter> */}
     <App />
-  </React.StrictMode>
+    {/* </ConnectedRouter> */}
+  </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
