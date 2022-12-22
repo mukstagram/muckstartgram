@@ -44,3 +44,7 @@ https://www.notion.so/7d99131b1ba74629b8ddb35c27fd1499?v=7619688d3695469aa714c60
 
 ## 코드 리뷰
 PR을 날린 후 merge전에 한명이상의 리뷰를 받고 승인을 받아야 merge가 가능하게 하였습니다.
+
+
+## 시연영상
+https://www.youtube.com/watch?v=FzpRxqGElZg
