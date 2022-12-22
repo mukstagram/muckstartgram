@@ -87,7 +87,6 @@ const Header = () => {
 const Wrapheader = styled.div`
   width: 100%;
   height: 70px;
-  margin-bottom: 50px;
   position: fixed;
   left: 50%;
   top: 0;
@@ -108,7 +107,7 @@ const WrapButton = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 5px;
-  gap: 5px;
+  gap: 10px;
 `;
 
 const ButtonStyle = styled.button`
@@ -162,6 +161,7 @@ const NickTitle = styled.div`
   font-weight: 600;
   margin-right: 5px;
   display: ${({ userName }) => (userName ? 'block' : 'none')};
+  color: black;
 `;
 
 export default Header;
