@@ -40,7 +40,33 @@ const Detailcommentitem = ({ comment }) => {
   return (
     <Commentlayout>
       <Commentbox>
-        <Commentnickname>{comment.nickname}</Commentnickname>
+        <Nickbtnbox>
+          {storedNickname === commentNickname && (
+            <>
+              <Commentnickname>{comment.nickname}</Commentnickname>
+              <Btnbox>
+                <Commenteditcomletebutton
+                  isOpen={editOpen}
+                  onClick={inputcomplete}
+                >
+                  수정완료
+                </Commenteditcomletebutton>
+                <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
+                  수정
+                </Commenteditbutton>
+                <Commentdelitebutton
+                  btnColor="red"
+                  value={comment.commentId}
+                  onClick={() =>
+                    dispatch(__commentDelete([comment.commentId, params]))
+                  }
+                >
+                  삭제
+                </Commentdelitebutton>
+              </Btnbox>
+            </>
+          )}
+        </Nickbtnbox>
         <Commentcontent key={comment.commentId} isOpen={editOpen}>
           {comment.comment}
         </Commentcontent>
@@ -50,33 +76,14 @@ const Detailcommentitem = ({ comment }) => {
           onChange={ChangeCommentHandler}
         />
       </Commentbox>
-      {storedNickname === commentNickname && (
-        <>
-          <Commenteditcomletebutton isOpen={editOpen} onClick={inputcomplete}>
-            수정완료
-          </Commenteditcomletebutton>
-          <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
-            수정하기
-          </Commenteditbutton>
-          <Commentdelitebutton
-            btnColor="red"
-            value={comment.commentId}
-            onClick={() =>
-              dispatch(__commentDelete([comment.commentId, params]))
-            }
-          >
-            삭제하기
-          </Commentdelitebutton>
-        </>
-      )}
     </Commentlayout>
   );
 };
 
 export default Detailcommentitem;
 const Commentlayout = styled.div`
-  width: 1020px;
-  height: 100px;
+  width: 1045px;
+  min-height: 100px;
   background-color: antiquewhite;
   margin-top: 10px;
   margin-left: 90px;
@@ -85,14 +92,20 @@ const Commentlayout = styled.div`
   border-radius: 5px;
   display: flex;
 `;
+const Nickbtnbox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Btnbox = styled.div`
+  display: flex;
+`;
 const Commentbox = styled.div`
-  width: 910px;
+  width: 1045px;
   margin-left: 10px;
-  overflow: auto;
 `;
 const Commenteditbutton = styled.button`
   width: 100px;
-  height: 86px;
+  height: 30px;
   border-radius: 5px;
   background-color: #ffdeb4;
   margin-top: 8px;
@@ -107,14 +120,13 @@ const Commenteditbutton = styled.button`
 `;
 const Commenteditcomletebutton = styled.button`
   width: 100px;
-  height: 86px;
+  height: 30px;
   border-radius: 5px;
   background-color: #ffc090;
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
   font-weight: 800;
-
   cursor: pointer;
   &:hover {
     background-color: #ffe15d;
@@ -123,14 +135,13 @@ const Commenteditcomletebutton = styled.button`
 `;
 const Commentdelitebutton = styled.button`
   width: 100px;
-  height: 86px;
+  height: 30px;
   border-radius: 5px;
   background-color: #ffadbc;
   margin-top: 8px;
   margin-right: 8px;
   font-size: 18px;
   font-weight: 800;
-
   cursor: pointer;
   &:hover {
     background-color: #f68989;
@@ -138,15 +149,16 @@ const Commentdelitebutton = styled.button`
 `;
 const Editcommentinput = styled.input`
   width: 800px;
-  height: 40px;
+  height: auto;
   outline: none;
   background-color: aliceblue;
   display: ${({ isOpen }) => (isOpen ? "none" : "block")};
   font-size: 18px;
 `;
-const Commentcontent = styled.p`
+const Commentcontent = styled.div`
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
   font-size: 18px;
+  display: flex;
 `;
 const Commentnickname = styled.p`
   font-weight: 800;

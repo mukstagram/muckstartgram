@@ -61,7 +61,7 @@ const Infolayout = styled.div`
   margin-left: 100px;
 `;
 const Infotitle = styled.div`
-  width: 450px;
+  width: 480px;
   height: 50px;
   line-height: 50px;
   background-color: #ffe5b5;
@@ -77,8 +77,8 @@ const Infotitle = styled.div`
 `;
 
 const Infocontent = styled.div`
-  width: 450px;
-  height: 380px;
+  width: 480px;
+  height: 375px;
   background-color: #ffe5b5;
   margin-top: 15px;
   display: flex;
