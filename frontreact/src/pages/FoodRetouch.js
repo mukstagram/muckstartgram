@@ -95,7 +95,6 @@ const FoodRetouch = () => {
   const first = () => {
     if (!isLoading) {
       if (targetFood) {
-        console.log(targetFood);
         setTime(targetFood.category);
         setFoodName(targetFood.title);
         setFoodDesc(targetFood.content);
@@ -103,11 +102,6 @@ const FoodRetouch = () => {
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(__getTargetFood(params)).then(()=>{
-  //     first();
-  //   })
-  // }, []);
   useEffect(() => {
     dispatch(__getTargetFood(params));
   }, []);
@@ -178,13 +172,8 @@ const FoodRetouch = () => {
       formData.append('thumbnail', imgFile);
       // 데이터 전달 명령 필요
       dispatch(__putFood({ formData: formData, params: params })).then(() => {
-        //메인페이지로 이동
-        // alert('작성이 완료되었습니다!');
         navigate('/');
       });
-      // //메인페이지로 이동
-      // alert('작성이 완료되었습니다!');
-      // navigate('/');
     } else {
       alert('작성 내용을 확인해주세요!');
     }
@@ -199,6 +188,7 @@ const FoodRetouch = () => {
 
   return (
     <Wrap>
+      <div style={{ height: '100px', backgroundColor: '#fafafa ' }}></div>
       <WrapWrap>
         <Partition>
           <div>
@@ -260,7 +250,6 @@ const FoodRetouch = () => {
 };
 
 const Wrap = styled.div`
-  margin-top: 100px;
   display: block;
   padding: 10px;
 `;
