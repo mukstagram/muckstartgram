@@ -182,6 +182,7 @@ const FoodPost = () => {
 
   return (
     <Wrap>
+      <div style={{ height: '100px', backgroundColor: '#fafafa ' }}></div>
       <WrapWrap>
         <Partition>
           <div>
@@ -241,7 +242,6 @@ const FoodPost = () => {
 };
 
 const Wrap = styled.div`
-  margin-top: 100px;
   display: block;
   padding: 10px;
 `;
