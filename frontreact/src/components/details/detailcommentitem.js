@@ -148,7 +148,8 @@ const Commentdelitebutton = styled.button`
   }
 `;
 const Editcommentinput = styled.input`
-  width: 800px;
+  width: 1020px;
+  min-height: 30px;
   height: auto;
   outline: none;
   background-color: aliceblue;
@@ -158,7 +159,6 @@ const Editcommentinput = styled.input`
 const Commentcontent = styled.div`
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
   font-size: 18px;
-  display: flex;
 `;
 const Commentnickname = styled.p`
   font-weight: 800;
