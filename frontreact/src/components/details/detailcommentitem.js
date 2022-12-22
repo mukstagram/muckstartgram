@@ -41,30 +41,28 @@ const Detailcommentitem = ({ comment }) => {
     <Commentlayout>
       <Commentbox>
         <Nickbtnbox>
+          <Commentnickname>{comment.nickname}</Commentnickname>
           {storedNickname === commentNickname && (
-            <>
-              <Commentnickname>{comment.nickname}</Commentnickname>
-              <Btnbox>
-                <Commenteditcomletebutton
-                  isOpen={editOpen}
-                  onClick={inputcomplete}
-                >
-                  수정완료
-                </Commenteditcomletebutton>
-                <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
-                  수정
-                </Commenteditbutton>
-                <Commentdelitebutton
-                  btnColor="red"
-                  value={comment.commentId}
-                  onClick={() =>
-                    dispatch(__commentDelete([comment.commentId, params]))
-                  }
-                >
-                  삭제
-                </Commentdelitebutton>
-              </Btnbox>
-            </>
+            <Btnbox>
+              <Commenteditcomletebutton
+                isOpen={editOpen}
+                onClick={inputcomplete}
+              >
+                수정완료
+              </Commenteditcomletebutton>
+              <Commenteditbutton onClick={inputopen} isOpen={editOpen}>
+                수정
+              </Commenteditbutton>
+              <Commentdelitebutton
+                btnColor="red"
+                value={comment.commentId}
+                onClick={() =>
+                  dispatch(__commentDelete([comment.commentId, params]))
+                }
+              >
+                삭제
+              </Commentdelitebutton>
+            </Btnbox>
           )}
         </Nickbtnbox>
         <Commentcontent key={comment.commentId} isOpen={editOpen}>

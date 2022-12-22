@@ -49,10 +49,8 @@ const Detailcomment = () => {
   const commentregistbutton = () => {
     const newComment = { comment: commentInput };
     if (!storedNickname) {
-      alert("로그인이 필요합니다!");
       navigate("/login");
-    }
-    if (commentInput === "") {
+    } else if (commentInput === "") {
       alert("댓글을 입력해주세요");
     }
     dispatch(__commentRegist({ params, newComment }));
@@ -174,7 +172,7 @@ const Editmainbutton = styled.button`
 `;
 const Backpagebutton = styled.button`
   position: relative;
-  left: 850px;
+  left: 890px;
   width: 150px;
   height: 50px;
   border-radius: 5px;
