@@ -49,6 +49,7 @@ const Detailcomment = () => {
   const commentregistbutton = () => {
     const newComment = { comment: commentInput };
     if (!storedNickname) {
+      alert("로그인이 필요합니다");
       navigate("/login");
     } else if (commentInput === "") {
       alert("댓글을 입력해주세요");

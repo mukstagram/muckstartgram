@@ -29,7 +29,7 @@ api.interceptors.response.use(
   function (error) {
     if (
       error.response.data.errorMessage ===
-      "전달된 토큰에 오류가 발생하였습니다."
+      "전달된 토큰에서 오류가 발생하였습니다."
     ) {
       localStorage.removeItem("token");
       localStorage.removeItem("nickname");
