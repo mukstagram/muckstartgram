@@ -109,7 +109,7 @@ const Detailcomment = () => {
 export default Detailcomment;
 
 const Commentinputlayout = styled.div`
-  width: 1020px;
+  width: 1045px;
   height: 150px;
   background-color: antiquewhite;
   margin-top: 50px;
@@ -137,13 +137,12 @@ const Commentbutton = styled.button`
   width: 100px;
   height: 86px;
   border-radius: 5px;
-  background-color: #c1efff;
+  background-color: #e8f3d6;
   font-size: 18px;
   font-weight: 900;
-
   cursor: pointer;
   &:hover {
-    background-color: #8fe3cf;
+    background-color: #d9e7c3;
   }
 `;
 
@@ -183,6 +182,6 @@ const Backpagebutton = styled.button`
   font-size: 30px;
   cursor: pointer;
   &:hover {
-    background-color: #ece9a6;
+    background-color: #d9e7c3;
   }
 `;
