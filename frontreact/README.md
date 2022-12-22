@@ -118,10 +118,12 @@ https://mukstagram.vercel.app/
 
 ## 코드리뷰
 
-- 1번리뷰
+- 1번리뷰 : extrareducer 작성방식을 공식문서에서 builder.addcase를 추천하므로 해당 방식으로 통일하는게 더 좋아 보인다.
 
-- 2번리뷰
+- 2번리뷰 : input태그에 cursor: pointer가 있어 조금 어색하다.
 
-- 3번리뷰
+- 3번리뷰 : 아이디 validation이 조금 복잡해서 조금 더 완화했으면 좋을 것 같다.
+
+- 4번리뷰 : 회원가입 후 보통 로그인으로 리다이렉션한다.
 
 ---
